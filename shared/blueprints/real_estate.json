@@ -1,0 +1,107 @@
+{
+  "id": "real-estate-agent",
+  "name": "Agent Immobilier IA",
+  "industry": "real_estate",
+  "initialState": "accueil",
+  "fallbackState": "clarification",
+  "context": {
+    "agency_name": "ImmoVision AI",
+    "project_type": null,
+    "budget": null,
+    "location": null,
+    "delay": null
+  },
+  "states": [
+    {
+      "id": "accueil",
+      "name": "Accueil",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Bonjour, ici {{agency_name}}. Vous recherchez un bien à acheter ou souhaitez-vous vendre votre bien ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'buy' || intent === 'rent'", "targetState": "qualification_acheteur" },
+        { "condition": "intent === 'sell'", "targetState": "qualification_vendeur" }
+      ]
+    },
+    {
+      "id": "qualification_acheteur",
+      "name": "Qualification Acheteur",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "D'accord. Pour mieux vous accompagner, quel serait votre budget, le secteur recherché et votre délai pour ce projet ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "entities.budget && entities.location", "targetState": "recherche_offres" }
+      ]
+    },
+    {
+      "id": "qualification_vendeur",
+      "name": "Qualification Vendeur",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "C'est noté. Pouvez-vous me décrire brièvement votre bien et votre délai de vente souhaité ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "entities.description", "targetState": "prise_rdv_estimation" }
+      ]
+    },
+    {
+      "id": "recherche_offres",
+      "name": "Recherche Offres",
+      "onEnter": [
+        { "type": "query_database", "config": { "table": "real_estate_properties", "action": "search" } },
+        { "type": "speak_to_caller", "config": { "text": "Je consulte nos mandats... J'ai trouvé un bien qui correspond à vos critères. Souhaitez-vous organiser une visite ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'confirm'", "targetState": "prise_rdv_visite" }
+      ]
+    },
+    {
+      "id": "prise_rdv_visite",
+      "name": "Prise de RDV Visite",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Parfait. J'ai un créneau disponible jeudi à 14h ou samedi matin. Qu'est-ce qui vous convient le mieux ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "entities.date", "targetState": "finalisation_visite" }
+      ]
+    },
+    {
+      "id": "prise_rdv_estimation",
+      "name": "Prise de RDV Estimation",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Très bien. Je vous propose de fixer un rendez-vous pour une estimation précise. J'ai de la disponibilité demain à 11h. Cela vous convient-il ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'confirm'", "targetState": "finalisation_visite" }
+      ]
+    },
+    {
+      "id": "finalisation_visite",
+      "name": "Finalisation",
+      "onEnter": [
+        { "type": "sync_to_calendar", "config": { "provider": "google" } },
+        { "type": "send_sms", "config": { "template": "confirmation_immo" } },
+        { "type": "speak_to_caller", "config": { "text": "C'est noté. Le rendez-vous est confirmé. Vous allez recevoir l'adresse et les détails par SMS. Merci et à bientôt !" } }
+      ],
+      "transitions": []
+    },
+    {
+      "id": "clarification",
+      "name": "Clarification",
+      "isFallback": true,
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Je n'ai pas bien saisi votre projet. Souhaitez-vous acheter ou vendre un bien ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'buy'", "targetState": "qualification_acheteur" },
+        { "condition": "intent === 'sell'", "targetState": "qualification_vendeur" }
+      ]
+    }
+  ]
+}

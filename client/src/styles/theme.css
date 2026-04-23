@@ -1,0 +1,304 @@
+/* ============================================
+   CENTRALIZED DESIGN SYSTEM VARIABLES
+   Servicall SaaS Elite - Version 2.0
+   ============================================ */
+
+:root {
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-black: 900;
+
+  /* Colors - Modern Palette (Based on index.css oklch) */
+  --primary: oklch(0.55 0.22 264);
+  --primary-foreground: oklch(0.98 0.01 264);
+  
+  /* Semantic Colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #06b6d4;
+
+  /* Backgrounds */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.235 0.015 65);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.235 0.015 65);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.235 0.015 65);
+  
+  /* UI Elements */
+  --secondary: oklch(0.98 0.001 286.375);
+  --secondary-foreground: oklch(0.4 0.015 65);
+  --muted: oklch(0.967 0.001 286.375);
+  --muted-foreground: oklch(0.552 0.016 285.938);
+  --accent: oklch(0.967 0.001 286.375);
+  --accent-foreground: oklch(0.141 0.005 285.823);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.92 0.004 286.32);
+  --input: oklch(0.92 0.004 286.32);
+  --ring: oklch(0.623 0.214 259.815);
+  --radius: 0.75rem;
+
+  /* Sidebar */
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.235 0.015 65);
+  --sidebar-primary: oklch(0.55 0.22 264);
+  --sidebar-primary-foreground: oklch(0.98 0.01 264);
+  --sidebar-accent: oklch(0.967 0.001 286.375);
+  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
+  --sidebar-border: oklch(0.92 0.004 286.32);
+  --sidebar-ring: oklch(0.623 0.214 259.815);
+}
+
+.dark {
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.85 0.005 65);
+  --card: oklch(0.21 0.006 285.885);
+  --card-foreground: oklch(0.85 0.005 65);
+  --popover: oklch(0.21 0.006 285.885);
+  --popover-foreground: oklch(0.85 0.005 65);
+  --secondary: oklch(0.24 0.006 286.033);
+  --secondary-foreground: oklch(0.7 0.005 65);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground:  oklch(0.92 0.005 65);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.488 0.243 264.376);
+  
+  --sidebar: oklch(0.21 0.006 285.885);
+  --sidebar-foreground: oklch(0.85 0.005 65);
+  --sidebar-accent: oklch(0.274 0.006 286.033);
+  --sidebar-accent-foreground:  oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.488 0.243 264.376);
+}
+
+/* ============================================
+   MOBILE FIRST — Servicall v2
+   Safe areas, bottom nav, scroll optimisations
+   ============================================ */
+
+:root {
+  --bottom-nav-height: 64px;
+  --header-height: 56px;
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-top: env(safe-area-inset-top, 0px);
+}
+
+/* Padding bas pour le contenu sous la bottom nav */
+@media (max-width: 767px) {
+  [data-main-content] {
+    padding-bottom: calc(var(--bottom-nav-height) + var(--safe-area-bottom) + 1rem);
+  }
+  /* Tables horizontalement scrollables sur mobile */
+  [data-table-wrapper] {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  /* Cards stack verticalement */
+  [data-card-grid] {
+    grid-template-columns: 1fr !important;
+  }
+  /* Kanban horizontal scroll sur mobile */
+  [data-kanban-board] {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1rem;
+    scroll-snap-type: x mandatory;
+  }
+  [data-kanban-column] {
+    scroll-snap-align: start;
+    min-width: 280px;
+    flex-shrink: 0;
+  }
+}
+
+/* Bottom Navigation Bar */
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--bottom-nav-height);
+  padding-bottom: var(--safe-area-bottom);
+  background: var(--background);
+  border-top: 1px solid var(--border);
+  display: none;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: color-mix(in oklch, var(--background) 92%, transparent);
+}
+
+@media (max-width: 767px) {
+  .mobile-bottom-nav {
+    display: flex;
+  }
+}
+
+.mobile-bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  transition: background 0.15s ease, color 0.15s ease;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  min-width: 56px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+.mobile-bottom-nav-item.active {
+  color: var(--primary);
+  background: color-mix(in oklch, var(--primary) 10%, transparent);
+}
+
+.mobile-bottom-nav-item svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.mobile-bottom-nav-item span {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* Badge sur les icones nav */
+.mobile-nav-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  background: var(--destructive);
+  color: var(--destructive-foreground);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+/* Fab button (appel rapide) */
+.mobile-fab {
+  position: fixed;
+  bottom: calc(var(--bottom-nav-height) + var(--safe-area-bottom) + 16px);
+  right: 16px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px color-mix(in oklch, var(--primary) 40%, transparent);
+  cursor: pointer;
+  border: none;
+  z-index: 49;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.mobile-fab:active {
+  transform: scale(0.94);
+}
+
+@media (max-width: 767px) {
+  .mobile-fab {
+    display: flex;
+  }
+}
+
+/* Page headers responsive */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 767px) {
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .page-header-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .page-header-actions > * {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+/* Stat cards 2 colonnes sur mobile */
+.stats-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1023px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 479px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+/* Tabs scrollables sur mobile */
+@media (max-width: 767px) {
+  [role="tablist"] {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    flex-wrap: nowrap;
+  }
+  [role="tablist"]::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Pagination compacte mobile */
+@media (max-width: 767px) {
+  .pagination-compact .hidden-mobile {
+    display: none;
+  }
+}
+
+/* Touch targets minimum 44px */
+@media (max-width: 767px) {
+  button, [role="button"], a, select, input[type="checkbox"], input[type="radio"] {
+    min-height: 36px;
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "title": "Dashboard",
+  "subtitle": "Übersicht",
+  "admin_console": "Admin-Konsole",
+  "welcome": "Willkommen bei {{tenantName}}, {{userName}}.",
+  "invalid_session": "Ungültige Sitzung",
+  "relogin_required": "Bitte melden Sie sich erneut an.",
+  "tenant_not_selected": "Unternehmen nicht ausgewählt",
+  "select_tenant_instruction": "Bitte wählen Sie ein Unternehmen aus dem Menü aus.",
+  "onboarding_guide": "Willkommensleitfaden",
+  "admin_mode": "ADMIN-MODUS",
+  "live": "Live",
+  "priority_followups": "Prioritäre Nachfassaktionen",
+  "prospects_count": "{{count}} Interessenten",
+  "daily_planning": "Tagesplanung",
+  "appointments_count": "{{count}} Termine",
+  "ip_telephony": "IP-Telefonie",
+  "operational": "Betriebsbereit",
+  "stats": {
+    "total_calls": "Bearbeitete Anrufe",
+    "total_calls_tooltip": "Gesamtzahl der ein- und ausgehenden Anrufe, die von der Plattform im ausgewählten Zeitraum verwaltet wurden.",
+    "new_prospects": "Neue Interessenten",
+    "new_prospects_tooltip": "Anzahl der neu qualifizierten Kontakte, die Ihrer Datenbank hinzugefügt wurden.",
+    "appointments": "Bestätigte Termine",
+    "appointments_tooltip": "Anzahl der Termine, deren Status als 'bestätigt' markiert ist.",
+    "conversion_rate": "Konversionsrate",
+    "conversion_rate_tooltip": "Prozentsatz der Interessenten, die in Kunden umgewandelt wurden oder eine Schlüsselaktion abgeschlossen haben."
+  },
+  "charts": {
+    "calls_trend": "Anruftrend",
+    "conversion": "Konversionsrate",
+    "current_week": "Aktuelle Woche",
+    "no_data": "Keine Daten verfügbar",
+    "vs_yesterday": "vs. gestern"
+  },
+  "loading_data": "Laden Ihrer Daten...",
+  "error_title": "Fehler beim Laden des Dashboards",
+  "error_message": "Daten konnten nicht geladen werden. Bitte versuchen Sie es erneut.",
+  "ai_transparency": {
+    "title": "KI-Transparenz",
+    "automation_rate": "Automatisierungsrate",
+    "false_positives": "Falsch-Positive",
+    "false_negatives": "Falsch-Negative",
+    "agreement_rate": "Mensch/KI-Zustimmungsrate"
+  },
+  "audit_logs": {
+    "title": "Audit-Logs & Rückverfolgbarkeit",
+    "no_logs": "Keine Audit-Logs verfügbar"
+  },
+  "recent_activity": "Letzte Anrufaktivität"
+}

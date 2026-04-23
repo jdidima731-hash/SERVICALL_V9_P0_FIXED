@@ -1,0 +1,219 @@
+{
+  "industries": {
+    "generic": {
+      "id": "generic",
+      "name": "Générique / Téléphonie de base",
+      "category": "Standard",
+      "description": "Configuration standard pour tout type d'activité nécessitant une gestion d'appels.",
+      "icon": "📞",
+      "capabilities": [
+        "voicemail",
+        "ai_summary",
+        "task_creation"
+      ],
+      "systemPrompt": "Tu es un assistant téléphonique professionnel polyvalent.",
+      "workflows": [
+        "blueprint-1",
+        "blueprint-2",
+        "blueprint-3",
+        "blueprint-4",
+        "blueprint-5",
+        "blueprint-6",
+        "blueprint-7",
+        "blueprint-8",
+        "blueprint-9",
+        "blueprint-10"
+      ]
+    },
+    "call_center": {
+      "id": "call_center",
+      "name": "Centre d'appels",
+      "category": "Services",
+      "description": "Optimisé pour la qualification d'appels et les enquêtes de satisfaction.",
+      "icon": "🎧",
+      "capabilities": [
+        "ai_intent",
+        "task_creation",
+        "surveys"
+      ],
+      "systemPrompt": "Tu es un agent de centre d'appels expert en qualification.",
+      "workflows": [
+        "blueprint-1",
+        "blueprint-2",
+        "blueprint-10",
+        "blueprint-13",
+        "blueprint-14",
+        "blueprint-15",
+        "blueprint-16"
+      ]
+    },
+    "medical_practice": {
+      "id": "medical_practice",
+      "name": "Cabinet Médical",
+      "category": "Santé",
+      "description": "Gestion des rendez-vous patients et urgences médicales.",
+      "icon": "⚕️",
+      "capabilities": [
+        "appointments",
+        "urgency_detection"
+      ],
+      "systemPrompt": "Tu es un assistant de cabinet médical. Sois empathique et précis.",
+      "workflows": [
+        "blueprint-1",
+        "blueprint-3",
+        "blueprint-20",
+        "blueprint-21"
+      ]
+    },
+    "real_estate": {
+      "id": "real_estate",
+      "name": "Agence Immobilière",
+      "category": "Immobilier",
+      "description": "Suivi des prospects acheteurs et planification de visites.",
+      "icon": "🏠",
+      "capabilities": [
+        "appointments",
+        "lead_tracking"
+      ],
+      "systemPrompt": "Tu es un conseiller immobilier expert en relation client.",
+      "workflows": [
+        "blueprint-1",
+        "blueprint-11",
+        "blueprint-14",
+        "blueprint-20",
+        "blueprint-21"
+      ]
+    },
+    "legal_firm": {
+      "id": "legal_firm",
+      "name": "Cabinet Juridique",
+      "category": "Droit",
+      "description": "Accueil client, suivi de dossiers et rappels de paiement.",
+      "icon": "⚖️",
+      "capabilities": [
+        "appointments",
+        "case_tracking"
+      ],
+      "systemPrompt": "Tu es un assistant juridique rigoureux et professionnel.",
+      "workflows": [
+        "blueprint-1",
+        "blueprint-3",
+        "blueprint-14",
+        "blueprint-20"
+      ]
+    },
+    "it_services": {
+      "id": "it_services",
+      "name": "Services Informatiques",
+      "category": "Technologie",
+      "description": "Support technique niveau 1 et escalade d'incidents.",
+      "icon": "💻",
+      "capabilities": [
+        "ticketing",
+        "incident_escalation"
+      ],
+      "systemPrompt": "Tu es un technicien support informatique de premier niveau.",
+      "workflows": [
+        "blueprint-1",
+        "blueprint-2",
+        "blueprint-17",
+        "blueprint-18"
+      ]
+    },
+    "restaurant": {
+      "id": "restaurant",
+      "name": "Restauration",
+      "category": "Services",
+      "description": "Gestion des réservations et commandes à emporter.",
+      "icon": "🍽️",
+      "capabilities": [
+        "reservations",
+        "order_taking"
+      ],
+      "systemPrompt": "Tu es un hôte de restaurant accueillant et efficace.",
+      "workflows": [
+        "blueprint-1",
+        "blueprint-11",
+        "blueprint-20",
+        "blueprint-21",
+        "blueprint-22",
+        "blueprint-23"
+      ]
+    },
+    "e_commerce": {
+      "id": "e_commerce",
+      "name": "E-commerce",
+      "category": "Commerce",
+      "description": "Suivi de commandes, livraisons et support client.",
+      "icon": "🛒",
+      "capabilities": [
+        "order_tracking",
+        "delivery_updates"
+      ],
+      "systemPrompt": "Tu es un conseiller client e-commerce orienté solution.",
+      "workflows": [
+        "blueprint-1",
+        "blueprint-2",
+        "blueprint-11",
+        "blueprint-13",
+        "whatsapp-vendor"
+      ]
+    },
+    "delivery": {
+      "id": "delivery",
+      "name": "Livraison / Logistique",
+      "category": "Logistique",
+      "description": "Suivi de colis et coordination de livraison.",
+      "icon": "🚚",
+      "capabilities": [
+        "tracking",
+        "sms_notifications"
+      ],
+      "systemPrompt": "Tu es un coordinateur logistique précis.",
+      "workflows": [
+        "blueprint-1",
+        "blueprint-2",
+        "blueprint-20",
+        "blueprint-21",
+        "blueprint-22"
+      ]
+    },
+    "hr": {
+      "id": "hr",
+      "name": "Ressources Humaines",
+      "category": "Services",
+      "description": "Gestion des candidatures et des entretiens de recrutement.",
+      "icon": "👥",
+      "capabilities": [
+        "appointments",
+        "lead_tracking"
+      ],
+      "systemPrompt": "Tu es un assistant RH professionnel et accueillant.",
+      "workflows": [
+        "blueprint-1",
+        "blueprint-11",
+        "blueprint-14",
+        "blueprint-20"
+      ]
+    }
+  },
+  "capabilities": {
+    "voicemail": "Messagerie vocale",
+    "ai_summary": "Résumé automatique par IA",
+    "task_creation": "Création de tâches CRM",
+    "ai_intent": "Détection d'intention",
+    "appointments": "Gestion de rendez-vous",
+    "urgency_detection": "Détection d'urgence",
+    "lead_tracking": "Suivi de prospects",
+    "case_tracking": "Suivi de dossiers",
+    "ticketing": "Gestion de tickets",
+    "incident_escalation": "Escalade d'incidents",
+    "reservations": "Réservations",
+    "order_taking": "Prise de commande",
+    "order_tracking": "Suivi de commande",
+    "delivery_updates": "Mises à jour de livraison",
+    "tracking": "Suivi logistique",
+    "sms_notifications": "Notifications SMS",
+    "surveys": "Enquêtes de satisfaction"
+  }
+}

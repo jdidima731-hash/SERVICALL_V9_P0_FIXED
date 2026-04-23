@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: servicall-redis-dev
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - servicall-network
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: servicall-postgres-dev
+    environment:
+      POSTGRES_USER: servicall
+      POSTGRES_PASSWORD: servicall_pass
+      POSTGRES_DB: servicall_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U servicall"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - servicall-network
+
+volumes:
+  redis_data:
+  postgres_data:
+
+networks:
+  servicall-network:
+    driver: bridge

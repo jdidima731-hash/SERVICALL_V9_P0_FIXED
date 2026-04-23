@@ -1,0 +1,41 @@
+{
+  "title": "Einstellungen",
+  "subtitle": "Verwalten Sie Ihr Konto und Ihre Einstellungen",
+  "tabs": {
+    "apps": "Apps",
+    "profile": "Profil",
+    "security": "Sicherheit",
+    "notifications": "Benachrichtigungen",
+    "appearance": "Erscheinungsbild",
+    "team": "Team",
+    "business": "Geschäft",
+    "cashier": "Kasse",
+    "monitoring": "Überwachung"
+  },
+  "profile": {
+    "title": "Profil",
+    "description": "Aktualisieren Sie Ihre persönlichen Informationen",
+    "avatar": "Profilbild",
+    "change_avatar": "Avatar ändern",
+    "first_name": "Vorname",
+    "last_name": "Nachname",
+    "email": "E-Mail-Adresse",
+    "phone": "Telefonnummer",
+    "save_success": "Profil erfolgreich gespeichert"
+  },
+  "appearance": {
+    "title": "Erscheinungsbild",
+    "description": "Passen Sie das Erscheinungsbild Ihrer Anwendung an",
+    "theme": "Design",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "System",
+    "save_success": "Erscheinungsbildeinstellungen gespeichert"
+  },
+  "danger_zone": {
+    "title": "Gefahrenzone",
+    "description": "Nicht umkehrbare Aktionen",
+    "delete_account": "Konto löschen",
+    "delete_account_warning": "Diese Aktion kann nicht rückgängig gemacht werden. Alle Ihre Daten werden dauerhaft gelöscht."
+  }
+}

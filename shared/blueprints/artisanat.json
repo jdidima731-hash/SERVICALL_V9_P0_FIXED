@@ -1,0 +1,92 @@
+{
+  "id": "artisan-intervention",
+  "name": "Artisan Intervention",
+  "industry": "services",
+  "initialState": "accueil",
+  "fallbackState": "clarification",
+  "context": {
+    "artisan_name": "Pro Services 24/7",
+    "service_type": null,
+    "urgency": "low",
+    "address": null
+  },
+  "states": [
+    {
+      "id": "accueil",
+      "name": "Accueil",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Bonjour, service technique {{artisan_name}}. Pour quel type de panne nous appelez-vous aujourd'hui ? Est-ce urgent ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'report_issue'", "targetState": "qualification_urgence" }
+      ]
+    },
+    {
+      "id": "qualification_urgence",
+      "name": "Qualification Urgence",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "D'accord. Pouvez-vous me décrire précisément le problème et me confirmer si cela nécessite une intervention immédiate ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "entities.urgency === 'high'", "targetState": "intervention_urgente" },
+        { "condition": "true", "targetState": "planification_normale" }
+      ]
+    },
+    {
+      "id": "intervention_urgente",
+      "name": "Intervention Urgente",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Je comprends, c'est une urgence. Je vais dépêcher un technicien immédiatement. Quelle est l'adresse exacte de l'intervention ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "entities.address", "targetState": "finalisation_urgence" }
+      ]
+    },
+    {
+      "id": "planification_normale",
+      "name": "Planification Normale",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Très bien. J'ai un créneau disponible demain matin ou jeudi après-midi. Quelle est votre adresse et quel créneau préférez-vous ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "entities.address && entities.date", "targetState": "finalisation_intervention" }
+      ]
+    },
+    {
+      "id": "finalisation_urgence",
+      "name": "Finalisation Urgence",
+      "onEnter": [
+        { "type": "dispatch_technician", "config": { "priority": "high" } },
+        { "type": "send_sms", "config": { "template": "technician_on_the_way" } },
+        { "type": "speak_to_caller", "config": { "text": "C'est noté. Le technicien arrive d'ici 30 minutes. Vous allez recevoir un SMS de suivi. À tout de suite." } }
+      ],
+      "transitions": []
+    },
+    {
+      "id": "finalisation_intervention",
+      "name": "Finalisation Intervention",
+      "onEnter": [
+        { "type": "sync_to_calendar", "config": { "provider": "google" } },
+        { "type": "send_sms", "config": { "template": "intervention_confirmed" } },
+        { "type": "speak_to_caller", "config": { "text": "C'est enregistré pour le {{entities.date}}. Un SMS de confirmation vous a été envoyé. Bonne journée." } }
+      ],
+      "transitions": []
+    },
+    {
+      "id": "clarification",
+      "name": "Clarification",
+      "isFallback": true,
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Je n'ai pas bien compris votre problème. S'agit-il d'une panne électrique, de plomberie ou d'autre chose ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'report_issue'", "targetState": "qualification_urgence" }
+      ]
+    }
+  ]
+}

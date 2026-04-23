@@ -1,0 +1,51 @@
+{
+  "title": "لوحة القيادة",
+  "subtitle": "نظرة عامة",
+  "admin_console": "وحدة تحكم المسؤول",
+  "welcome": "مرحباً بك في {{tenantName}}، {{userName}}.",
+  "invalid_session": "جلسة غير صالحة",
+  "relogin_required": "يرجى تسجيل الدخول مرة أخرى.",
+  "tenant_not_selected": "الشركة غير مختارة",
+  "select_tenant_instruction": "يرجى اختيار شركة من القائمة.",
+  "onboarding_guide": "دليل الترحيب",
+  "admin_mode": "وضع المسؤول",
+  "live": "مباشر",
+  "priority_followups": "متابعات ذات أولوية",
+  "prospects_count": "{{count}} عملاء محتملين",
+  "daily_planning": "التخطيط اليومي",
+  "appointments_count": "{{count}} مواعيد",
+  "ip_telephony": "مهاتفة IP",
+  "operational": "قيد التشغيل",
+  "stats": {
+    "total_calls": "المكالمات التي تمت معالجتها",
+    "total_calls_tooltip": "إجمالي عدد المكالمات الواردة والصادرة التي تمت إدارتها بواسطة المنصة خلال الفترة المختارة.",
+    "new_prospects": "عملاء محتملون جدد",
+    "new_prospects_tooltip": "عدد جهات الاتصال المؤهلة الجديدة المضافة إلى قاعدة بياناتك.",
+    "appointments": "مواعيد مؤكدة",
+    "appointments_tooltip": "عدد المواعيد التي تم وضع علامة 'مؤكد' على حالتها.",
+    "conversion_rate": "معدل التحويل",
+    "conversion_rate_tooltip": "نسبة العملاء المحتملين الذين تم تحويلهم إلى عملاء أو الذين أكملوا إجراءً رئيسياً."
+  },
+  "charts": {
+    "calls_trend": "اتجاه المكالمات",
+    "conversion": "معدل التحويل",
+    "current_week": "الأسبوع الحالي",
+    "no_data": "لا توجد بيانات متاحة",
+    "vs_yesterday": "مقارنة بالأمس"
+  },
+  "loading_data": "جاري تحميل بياناتك...",
+  "error_title": "خطأ في تحميل لوحة القيادة",
+  "error_message": "تعذر تحميل البيانات. يرجى المحاولة مرة أخرى.",
+  "ai_transparency": {
+    "title": "شفافية الذكاء الاصطناعي",
+    "automation_rate": "معدل الأتمتة",
+    "false_positives": "إيجابيات كاذبة",
+    "false_negatives": "سلبيات كاذبة",
+    "agreement_rate": "معدل الاتفاق بين البشر والذكاء الاصطناعي"
+  },
+  "audit_logs": {
+    "title": "سجلات التدقيق والتتبع",
+    "no_logs": "لا توجد سجلات تدقيق متاحة"
+  },
+  "recent_activity": "نشاط المكالمات الأخير"
+}

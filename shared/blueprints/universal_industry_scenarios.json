@@ -1,0 +1,76 @@
+{
+  "industries": {
+    "medical": {
+      "activity_type": "medical",
+      "tone": "Calme, Rassurant, Clair",
+      "objectives": ["Prendre un RDV", "Trier l'urgence"],
+      "questions": ["Motif ?", "Symptômes ?", "Urgence ?"],
+      "rules": ["Pas de diagnostic", "Redirection si urgence"],
+      "actions": ["check_availability", "sync_calendar", "send_sms_confirmation"]
+    },
+    "hotel": {
+      "activity_type": "hotel",
+      "tone": "Accueil, Confort, Simplicité",
+      "objectives": ["Réserver une chambre"],
+      "questions": ["Dates ?", "Type de chambre ?", "Nombre de personnes ?"],
+      "rules": ["Vérifier disponibilité temps réel"],
+      "actions": ["check_rooms", "sync_calendar", "send_sms_confirmation"]
+    },
+    "restaurant": {
+      "activity_type": "restaurant",
+      "tone": "Chaleureux, Rapide, Clair",
+      "objectives": ["Prendre une commande", "Réserver une table"],
+      "questions": ["Sur place ou livraison ?", "Plats ?", "Allergies ?"],
+      "rules": ["Valider commande vocalement", "Bloquer si indisponible"],
+      "actions": ["save_to_sheets", "check_inventory", "send_sms_confirmation"]
+    },
+    "legal": {
+      "activity_type": "legal",
+      "tone": "Sérieux, Confidentiel",
+      "objectives": ["Ouvrir un dossier"],
+      "questions": ["Type d'affaire ?", "Dates importantes ?", "Urgence ?"],
+      "rules": ["Confidentialité stricte", "Collecte dates clés"],
+      "actions": ["create_legal_case", "sync_calendar", "send_sms_confirmation"]
+    },
+    "logistics": {
+      "activity_type": "logistics",
+      "tone": "Précis, Solution",
+      "objectives": ["Suivi colis", "Gestion incident"],
+      "questions": ["Numéro suivi ?", "Problème ?", "Nouvelle date ?"],
+      "rules": ["Précision du statut", "Proposer solution"],
+      "actions": ["track_package", "update_delivery_date", "send_sms_update"]
+    },
+    "commerce": {
+      "activity_type": "commerce",
+      "tone": "Positif, Service client",
+      "objectives": ["Aider", "Fidéliser"],
+      "questions": ["Numéro commande ?", "Problème ?", "Produit recherché ?"],
+      "rules": ["Fidélisation active", "Résolution rapide"],
+      "actions": ["check_order_status", "process_return", "send_discount_code"]
+    },
+    "real_estate": {
+      "activity_type": "real_estate",
+      "tone": "Confiance, Accompagnement",
+      "objectives": ["Qualifier acheteur ou vendeur"],
+      "questions": ["Achat ou vente ?", "Budget ?", "Délai ?"],
+      "rules": ["Accompagnement personnalisé", "Prise de RDV visite"],
+      "actions": ["search_properties", "book_visit", "send_property_details"]
+    },
+    "services": {
+      "activity_type": "services",
+      "tone": "Pratique, Urgent si besoin",
+      "objectives": ["RDV intervention"],
+      "questions": ["Type panne ?", "Adresse ?", "Urgence ?"],
+      "rules": ["Évaluation urgence", "Collecte adresse précise"],
+      "actions": ["dispatch_technician", "sync_calendar", "send_sms_confirmation"]
+    },
+    "education": {
+      "activity_type": "education",
+      "tone": "Pédagogique, Clair",
+      "objectives": ["Inscription", "Information"],
+      "questions": ["Formation ?", "Niveau ?", "Disponibilité ?"],
+      "rules": ["Clarté pédagogique", "Collecte niveau actuel"],
+      "actions": ["register_student", "send_brochure", "book_info_session"]
+    }
+  }
+}

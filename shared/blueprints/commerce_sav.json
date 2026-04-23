@@ -1,0 +1,91 @@
+{
+  "id": "commerce-sav",
+  "name": "Commerce SAV",
+  "industry": "commerce",
+  "initialState": "accueil",
+  "fallbackState": "clarification",
+  "context": {
+    "activity_type": "commerce_sav",
+    "num_commande": null,
+    "motif_retour": null
+  },
+  "states": [
+    {
+      "id": "accueil",
+      "name": "Accueil",
+      "onEnter": [
+        { "type": "load_callcenter_script", "config": { "activity": "commerce_sav" } },
+        { "type": "speak_to_caller", "config": { "text": "{{pitch}}" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'report_issue'", "targetState": "demande_commande" }
+      ]
+    },
+    {
+      "id": "demande_commande",
+      "name": "Demande Commande",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "{{questions_qualification[0].text}}" } },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "entities.num_commande", "targetState": "demande_motif" }
+      ]
+    },
+    {
+      "id": "demande_motif",
+      "name": "Demande Motif",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "{{questions_qualification[1].text}}" } },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "entities.motif_retour", "targetState": "resolution_sav" }
+      ]
+    },
+    {
+      "id": "resolution_sav",
+      "name": "Résolution SAV",
+      "onEnter": [
+        { "type": "process_return", "config": { "order": "{{entities.num_commande}}", "reason": "{{entities.motif_retour}}" } },
+        { "type": "speak_to_caller", "config": { "text": "Je lance immédiatement la procédure de retour. Un bon de retour vous a été envoyé par SMS. Puis-je vous proposer une offre exclusive sur notre nouvelle gamme ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'interest' || intent === 'confirm'", "targetState": "cross_sell" },
+        { "condition": "true", "targetState": "fin_appel" }
+      ]
+    },
+    {
+      "id": "cross_sell",
+      "name": "Cross Sell",
+      "onEnter": [
+        { "type": "cross_sell_suggestion", "config": { "category": "new_arrivals" } },
+        { "type": "speak_to_caller", "config": { "text": "Super ! J'ai un code promo de 20% pour vous sur l'article qui vous intéresse. Souhaitez-vous le recevoir ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'confirm'", "targetState": "finalisation_sav" },
+        { "condition": "true", "targetState": "fin_appel" }
+      ]
+    },
+    {
+      "id": "finalisation_sav",
+      "name": "Finalisation SAV",
+      "onEnter": [
+        { "type": "send_discount_sms", "config": { "code": "SAV20" } },
+        { "type": "speak_to_caller", "config": { "text": "C'est fait ! Le code est dans vos SMS. Merci de votre confiance et à bientôt." } }
+      ],
+      "transitions": []
+    },
+    {
+      "id": "fin_appel",
+      "name": "Fin d'appel",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "D'accord. Votre retour est bien pris en compte. Bonne journée." } }
+      ],
+      "transitions": []
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "title": "الإعدادات",
+  "subtitle": "إدارة حسابك وتفضيلاتك",
+  "tabs": {
+    "apps": "التطبيقات",
+    "profile": "الملف الشخصي",
+    "security": "الأمان",
+    "notifications": "الإشعارات",
+    "appearance": "المظهر",
+    "team": "الفريق",
+    "business": "الأعمال",
+    "cashier": "الصندوق",
+    "monitoring": "المراقبة"
+  },
+  "profile": {
+    "title": "الملف الشخصي",
+    "description": "حدّث معلوماتك الشخصية",
+    "avatar": "صورة الملف الشخصي",
+    "change_avatar": "تغيير الصورة",
+    "first_name": "الاسم الأول",
+    "last_name": "اسم العائلة",
+    "email": "عنوان البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "save_success": "تم حفظ الملف الشخصي بنجاح"
+  },
+  "appearance": {
+    "title": "المظهر",
+    "description": "تخصيص مظهر التطبيق",
+    "theme": "المظهر",
+    "light": "فاتح",
+    "dark": "داكن",
+    "system": "النظام",
+    "save_success": "تم حفظ إعدادات المظهر"
+  },
+  "danger_zone": {
+    "title": "منطقة الخطر",
+    "description": "إجراءات لا يمكن التراجع عنها",
+    "delete_account": "حذف الحساب",
+    "delete_account_warning": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف جميع بياناتك بشكل دائم."
+  }
+}

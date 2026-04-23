@@ -1,0 +1,52 @@
+{
+  "billing": {
+    "title": "Abrechnung",
+    "subtitle": "Verwalten Sie Ihre Rechnungen und Abonnements",
+    "subscription": "Abonnement",
+    "payment_method": "Zahlungsmethode",
+    "invoices": "Rechnungen",
+    "status_paid": "BEZAHLT",
+    "status_pending": "AUSSTEHEND",
+    "status_failed": "FEHLGESCHLAGEN",
+    "status_active": "AKTIV",
+    "download": "Herunterladen",
+    "downloading": "Rechnung wird heruntergeladen...",
+    "error_portal": "Fehler beim Öffnen des Abrechnungsportals: ",
+    "error_payment": "Fehler beim Generieren des Zahlungslinks: ",
+    "no_invoices": "Keine Rechnungen gefunden"
+  },
+  "campaigns": {
+    "title": "Kampagnen",
+    "subtitle": "Verwalten Sie Ihre Marketingkampagnen",
+    "create_campaign": "Kampagne erstellen",
+    "campaign_name": "Kampagnenname",
+    "status": "Status",
+    "actions": "Aktionen",
+    "start": "Starten",
+    "stop": "Stoppen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "import_csv": "CSV importieren",
+    "no_campaigns": "Keine Kampagnen gefunden"
+  },
+  "softphone": {
+    "title": "Telefon",
+    "subtitle": "Tätigen und empfangen Sie Anrufe",
+    "loading": "Softphone wird geladen...",
+    "not_configured": "Softphone ist nicht konfiguriert",
+    "configure": "Konfigurieren",
+    "twilio_config": "Twilio-Konfiguration",
+    "ready": "Bereit",
+    "configured": "Konfiguriert",
+    "missing": "Fehlt"
+  },
+  "calendar": {
+    "title": "Kalender",
+    "subtitle": "Verwalten Sie Ihre Termine",
+    "month": "Monat",
+    "week": "Woche",
+    "day": "Tag",
+    "new_appointment": "Neuer Termin",
+    "no_appointments": "Keine Termine"
+  }
+}

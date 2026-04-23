@@ -1,0 +1,123 @@
+{
+  "title": "Tableau de bord",
+  "subtitle": "Vue d'ensemble",
+  "admin_console": "Console Pilotage",
+  "welcome": "Bienvenue sur {{tenantName}}, {{userName}}.",
+  "invalid_session": "Session invalide",
+  "relogin_required": "Veuillez vous reconnecter.",
+  "tenant_not_selected": "Entreprise non sélectionnée",
+  "select_tenant_instruction": "Veuillez sélectionner une entreprise dans le menu.",
+  "onboarding_guide": "Guide d'accueil",
+  "admin_mode": "MODE ADMIN",
+  "live": "Live",
+  "priority_followups": "Relances Prioritaires",
+  "prospects_count": "{{count}} prospects",
+  "daily_planning": "Planning du jour",
+  "appointments_count": "{{count}} RDV",
+  "ip_telephony": "Téléphonie IP",
+  "operational": "Opérationnelle",
+  "stats": {
+    "total_calls": "Appels Traités",
+    "total_calls_tooltip": "Nombre total d'appels entrants et sortants gérés par la plateforme sur la période sélectionnée.",
+    "new_prospects": "Nouveaux Prospects",
+    "new_prospects_tooltip": "Nombre de nouveaux contacts qualifiés ajoutés à votre base de données.",
+    "appointments": "RDV Confirmés",
+    "appointments_tooltip": "Nombre de rendez-vous dont le statut est marqué comme 'confirmé'.",
+    "conversion_rate": "Taux de Conversion",
+    "conversion_rate_tooltip": "Pourcentage de prospects ayant été convertis en clients ou ayant validé une action clé."
+  },
+  "charts": {
+    "calls_trend": "Évolution des appels",
+    "conversion": "Taux de conversion",
+    "current_week": "Semaine actuelle",
+    "no_data": "Aucune donnée disponible",
+    "vs_yesterday": "vs hier"
+  },
+  "loading_data": "Chargement de vos données...",
+  "error_title": "Erreur de chargement du tableau de bord",
+  "error_message": "Impossible de charger les données. Veuillez réessayer.",
+  "ai_transparency": {
+    "title": "Transparence IA",
+    "automation_rate": "Taux d'automatisation",
+    "false_positives": "Faux Positifs",
+    "false_negatives": "Faux Négatifs",
+    "agreement_rate": "Taux d'accord Humain/IA"
+  },
+  "audit_logs": {
+    "title": "Logs d'Audit & Traçabilité",
+    "no_logs": "Aucun log d'audit disponible"
+  },
+  "recent_activity": "Activité récente des appels",
+  "pages": {
+    "dashboard": {
+      "real_time_supervision": "Supervision en temps réel de votre agence",
+      "day": "Jour",
+      "week": "Semaine",
+      "month": "Mois",
+      "vs_previous": "vs période précédente",
+      "at_risk_agents": "Agents à risque",
+      "no_at_risk": "Aucun agent à risque détecté",
+      "quality_score": "Score Qualité",
+      "calls_activity": "Activité des appels"
+    },
+    "calls": {
+      "title": "Historique des Appels",
+      "subtitle": "Consultez l'historique complet de vos appels et interactions.",
+      "call": "Appeler",
+      "export": "Exporter",
+      "search_placeholder": "Rechercher par nom ou numéro...",
+      "all_calls": "Tous les appels",
+      "inbound_calls": "Appels entrants",
+      "outbound_calls": "Appels sortants",
+      "missed_calls": "Appels manqués",
+      "most_recent": "Plus récents",
+      "duration_long": "Durée (long)",
+      "table_title": "Appels",
+      "table_subtitle": "Détail de tous les appels",
+      "no_calls": "Aucun appel trouvé",
+      "contact": "Contact",
+      "type": "Type",
+      "date": "Date",
+      "duration": "Durée",
+      "actions": "Actions",
+      "inbound": "Entrant",
+      "outbound": "Sortant",
+      "missed": "Manqué",
+      "dialing_to": "Appel vers {{number}}..."
+    },
+    "prospects": {
+      "title": "Gestion des Prospects",
+      "subtitle": "Pilotez votre pipeline commercial avec le système Kanban Elite.",
+      "import_csv": "Importer CSV",
+      "export": "Exporter",
+      "new_prospect": "Nouveau Prospect",
+      "search_placeholder": "Rechercher un prospect...",
+      "kanban": "Kanban",
+      "list": "Liste",
+      "loading": "Chargement des prospects...",
+      "error_title": "Erreur de chargement",
+      "error_message": "Impossible de charger les prospects. Veuillez vérifier votre connexion.",
+      "no_prospects": "Aucun prospect",
+      "no_prospects_desc": "Commencez par ajouter votre premier prospect ou importez une liste depuis un fichier CSV.",
+      "no_results": "Aucun résultat",
+      "no_results_desc": "Aucun prospect ne correspond à la recherche \"{{searchTerm}}\".",
+      "reset_search": "Réinitialiser la recherche",
+      "moved_to": "Prospect déplacé vers {{status}}",
+      "table": {
+        "name": "Nom",
+        "company": "Entreprise",
+        "email": "Email",
+        "status": "Statut"
+      },
+      "columns": {
+        "new": "Nouveau",
+        "contacted": "Contacté",
+        "qualified": "Qualifié",
+        "proposal": "Proposition",
+        "negotiation": "Négociation",
+        "converted": "Gagné",
+        "lost": "Perdu"
+      }
+    }
+  }
+}

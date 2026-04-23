@@ -1,0 +1,53 @@
+{
+  "id": "whatsapp-vendor",
+  "name": "Agent Vendeur WhatsApp",
+  "industry": "commerce",
+  "trigger": "whatsapp_message_received",
+  "description": "Workflow complet : accueil → identification besoin → vérification stock → commande → paiement → suivi → upsell",
+  "states": [
+    {
+      "id": "accueil",
+      "name": "Accueil client",
+      "steps": [
+        { "type": "ai_intent", "config": { "categories": ["COMMANDE", "SUIVI", "INFO_PRODUIT", "SAV"] } },
+        { "type": "logic_if_else", "config": {
+          "condition": "variables.intent === 'SUIVI'",
+          "true_branch": [{ "type": "query_business_entities", "config": { "type": "order" } }],
+          "false_branch": []
+        }}
+      ]
+    },
+    {
+      "id": "recherche_produit",
+      "name": "Vérification stock",
+      "steps": [
+        { "type": "query_business_entities", "config": { "type": "product", "search_term": "{{variables.product_query}}" } },
+        { "type": "send_whatsapp", "config": { "message": "✅ {{variables.product_name}} disponible — {{variables.product_price}}€\nVoulez-vous commander ?" } }
+      ]
+    },
+    {
+      "id": "confirmation_commande",
+      "name": "Création commande",
+      "steps": [
+        { "type": "create_order", "config": { "product_name": "{{variables.product_name}}", "quantity": 1, "unit_price": "{{variables.product_price}}" } },
+        { "type": "request_payment", "config": { "amount": "{{variables.order_total}}", "description": "Commande {{variables.order_number}}" } },
+        { "type": "send_whatsapp", "config": { "message": "🛒 Commande {{variables.order_number}} créée !\nPaiement sécurisé : {{variables.payment_url}}" } }
+      ]
+    },
+    {
+      "id": "upsell",
+      "name": "Proposition complémentaire",
+      "steps": [
+        { "type": "query_business_entities", "config": { "type": "product", "search_term": "{{variables.product_name}}" } },
+        { "type": "send_whatsapp", "config": { "message": "💡 Les clients qui ont acheté ça prennent aussi : {{variables.upsell_suggestions}}" } }
+      ]
+    },
+    {
+      "id": "suivi_commande",
+      "name": "Suivi commande",
+      "steps": [
+        { "type": "send_whatsapp", "config": { "message": "📦 Votre commande {{variables.order_number}} : {{variables.order_status}}" } }
+      ]
+    }
+  ]
+}

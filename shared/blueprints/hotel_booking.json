@@ -1,0 +1,75 @@
+{
+  "id": "hotel-booking",
+  "name": "Réservation Hôtel V2",
+  "industry": "hotel",
+  "initialState": "accueil",
+  "fallbackState": "clarification",
+  "context": {
+    "hotel_name": "Grand Palace",
+    "dates": { "check_in": null, "check_out": null },
+    "room_type": null,
+    "guests": 1,
+    "total_price": 0,
+    "is_available": false
+  },
+  "states": [
+    {
+      "id": "accueil",
+      "name": "Accueil",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Bienvenue au {{hotel_name}}. Pour quelles dates souhaitez-vous réserver ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "entities.check_in && entities.check_out", "targetState": "qualification_chambre" }
+      ]
+    },
+    {
+      "id": "qualification_chambre",
+      "name": "Qualification Chambre",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Parfait. Pour combien de personnes et quel type de chambre préférez-vous : standard ou luxe ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "entities.room_type", "targetState": "verification_disponibilite" }
+      ]
+    },
+    {
+      "id": "verification_disponibilite",
+      "name": "Vérification Disponibilité",
+      "onEnter": [
+        { "type": "check_room_availability", "config": { "dates": "{{entities.dates}}", "type": "{{entities.room_type}}" } },
+        { "type": "speak_to_caller", "config": { "text": "Je vérifie nos disponibilités... Bonne nouvelle, c'est libre ! Le prix total sera de {{total_price}} euros. Puis-je valider votre réservation ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'confirm'", "targetState": "finalisation_reservation" },
+        { "condition": "intent === 'refuse'", "targetState": "accueil" }
+      ]
+    },
+    {
+      "id": "finalisation_reservation",
+      "name": "Finalisation Réservation",
+      "onEnter": [
+        { "type": "block_booking_conflict", "config": { "dates": "{{dates}}", "room": "{{room_type}}" } },
+        { "type": "sync_to_calendar", "config": { "provider": "google", "event": "Réservation {{hotel_name}}" } },
+        { "type": "send_sms_confirmation", "config": { "template": "hotel_booking_success" } },
+        { "type": "speak_to_caller", "config": { "text": "Votre réservation est confirmée ! Vous allez recevoir un SMS de confirmation. Nous avons hâte de vous accueillir au {{hotel_name}}. Bonne journée !" } }
+      ],
+      "transitions": []
+    },
+    {
+      "id": "clarification",
+      "name": "Clarification",
+      "isFallback": true,
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Je n'ai pas bien compris vos dates. Pourriez-vous répéter votre date d'arrivée et de départ ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "entities.check_in", "targetState": "qualification_chambre" }
+      ]
+    }
+  ]
+}

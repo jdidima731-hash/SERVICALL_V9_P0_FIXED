@@ -1,0 +1,117 @@
+{
+  "id": "delivery-ecommerce-support",
+  "name": "Livraison & E-commerce",
+  "industry": "logistics",
+  "initialState": "accueil",
+  "fallbackState": "clarification",
+  "context": {
+    "support_name": "LogiShop Support",
+    "tracking_number": null,
+    "order_id": null,
+    "issue_type": null
+  },
+  "states": [
+    {
+      "id": "accueil",
+      "name": "Accueil",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Bonjour, service client {{support_name}}. Souhaitez-vous suivre un colis ou signaler un problème sur une commande ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'track_package'", "targetState": "suivi_colis" },
+        { "condition": "intent === 'report_issue'", "targetState": "sav_commande" }
+      ]
+    },
+    {
+      "id": "suivi_colis",
+      "name": "Suivi Colis",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Entendu. Quel est votre numéro de suivi ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "entities.tracking_number", "targetState": "statut_livraison" }
+      ]
+    },
+    {
+      "id": "statut_livraison",
+      "name": "Statut Livraison",
+      "onEnter": [
+        { "type": "track_package", "config": { "number": "{{entities.tracking_number}}" } },
+        { "type": "speak_to_caller", "config": { "text": "Votre colis est actuellement en cours de livraison. Souhaitez-vous reprogrammer la date de passage ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'confirm'", "targetState": "reprogrammation" },
+        { "condition": "intent === 'refuse'", "targetState": "fin_appel" }
+      ]
+    },
+    {
+      "id": "reprogrammation",
+      "name": "Reprogrammation",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "D'accord. Quelle nouvelle date de livraison vous conviendrait ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "entities.date", "targetState": "finalisation_reprogrammation" }
+      ]
+    },
+    {
+      "id": "sav_commande",
+      "name": "SAV Commande",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "D'accord. Quel est votre numéro de commande et quel est le problème rencontré ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "entities.order_id", "targetState": "resolution_sav" }
+      ]
+    },
+    {
+      "id": "resolution_sav",
+      "name": "Résolution SAV",
+      "onEnter": [
+        { "type": "process_return", "config": { "order": "{{entities.order_id}}", "reason": "{{entities.issue_type}}" } },
+        { "type": "speak_to_caller", "config": { "text": "Je lance immédiatement la procédure de retour. Un bon de retour vous a été envoyé par SMS. Puis-je vous aider pour autre chose ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'confirm'", "targetState": "accueil" },
+        { "condition": "intent === 'refuse'", "targetState": "fin_appel" }
+      ]
+    },
+    {
+      "id": "finalisation_reprogrammation",
+      "name": "Finalisation Reprogrammation",
+      "onEnter": [
+        { "type": "update_delivery_date", "config": { "date": "{{entities.date}}" } },
+        { "type": "send_sms", "config": { "template": "delivery_reprogrammed" } },
+        { "type": "speak_to_caller", "config": { "text": "C'est enregistré pour le {{entities.date}}. Un SMS de confirmation vous a été envoyé. Bonne journée." } }
+      ],
+      "transitions": []
+    },
+    {
+      "id": "fin_appel",
+      "name": "Fin d'appel",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "D'accord. Merci de votre appel. Au revoir." } }
+      ],
+      "transitions": []
+    },
+    {
+      "id": "clarification",
+      "name": "Clarification",
+      "isFallback": true,
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Je n'ai pas bien compris votre demande. Souhaitez-vous suivre un colis ou signaler un problème ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'track_package'", "targetState": "suivi_colis" },
+        { "condition": "intent === 'report_issue'", "targetState": "sav_commande" }
+      ]
+    }
+  ]
+}

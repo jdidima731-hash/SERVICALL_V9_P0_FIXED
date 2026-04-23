@@ -1,0 +1,177 @@
+{
+  "id": "restaurant-order",
+  "name": "Prise de Commande Restaurant V2",
+  "industry": "restaurant",
+  "initialState": "accueil",
+  "fallbackState": "clarification",
+  "context": {
+    "restaurant_name": "Pizzeria Bella",
+    "cart": [],
+    "customer_phone": null,
+    "customer_name": null,
+    "delivery_address": null,
+    "total_price": 0,
+    "last_error": null,
+    "allergies": null
+  },
+  "states": [
+    {
+      "id": "accueil",
+      "name": "Accueil",
+      "onEnter": [
+        {
+          "type": "speak_to_caller",
+          "config": { "text": "Bonjour et bienvenue chez {{restaurant_name}}. Souhaitez-vous commander à emporter ou réserver une table ?" }
+        },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'order_food'", "targetState": "identification_client" },
+        { "condition": "intent === 'book_table'", "targetState": "reservation_table" },
+        { "condition": "intent === 'ask_hours'", "targetState": "info_horaires" }
+      ]
+    },
+    {
+      "id": "identification_client",
+      "name": "Identification Client",
+      "onEnter": [
+        {
+          "type": "speak_to_caller",
+          "config": { "text": "Puis-je avoir votre numéro de téléphone pour votre commande ?" }
+        },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "entities.phone_number", "targetState": "presentation_menu" }
+      ]
+    },
+    {
+      "id": "presentation_menu",
+      "name": "Présentation Menu",
+      "onEnter": [
+        {
+          "type": "speak_to_caller",
+          "config": { "text": "Nous proposons des pizzas Margherita, Pepperoni et des Tiramisu. Que souhaitez-vous commander ? N'oubliez pas de me signaler toute allergie." }
+        },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'order_item'", "targetState": "selection_plats" },
+        { "condition": "intent === 'backtrack'", "targetState": "accueil" }
+      ]
+    },
+    {
+      "id": "selection_plats",
+      "name": "Sélection Plats",
+      "onEnter": [
+        { "type": "check_inventory", "config": { "item": "{{entities.food_item}}" } },
+        {
+          "type": "update_context",
+          "config": { "key": "last_item", "value": "{{entities.food_item}}" }
+        },
+        {
+          "type": "speak_to_caller",
+          "config": { "text": "C'est noté pour {{entities.quantity || 1}} {{entities.food_item}}. Souhaitez-vous ajouter autre chose, modifier votre commande ou valider ?" }
+        },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'order_item' || intent === 'add_item'", "targetState": "selection_plats" },
+        { "condition": "intent === 'remove_item'", "targetState": "modification_commande" },
+        { "condition": "intent === 'finish_order' || intent === 'confirm'", "targetState": "validation_vocale" }
+      ]
+    },
+    {
+      "id": "modification_commande",
+      "name": "Modification Commande",
+      "onEnter": [
+        {
+          "type": "speak_to_caller",
+          "config": { "text": "D'accord, j'ai bien pris en compte la modification. Souhaitez-vous ajouter autre chose ou valider ?" }
+        },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'order_item'", "targetState": "selection_plats" },
+        { "condition": "intent === 'confirm'", "targetState": "validation_vocale" }
+      ]
+    },
+    {
+      "id": "validation_vocale",
+      "name": "Validation Vocale",
+      "onEnter": [
+        {
+          "type": "speak_to_caller",
+          "config": { "text": "Je récapitule votre commande : {{cart}}. C'est bien cela ? Des allergies à signaler ?" }
+        },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'confirm'", "targetState": "collecte_adresse" },
+        { "condition": "intent === 'modify'", "targetState": "selection_plats" }
+      ]
+    },
+    {
+      "id": "collecte_adresse",
+      "name": "Collecte Adresse",
+      "onEnter": [
+        {
+          "type": "speak_to_caller",
+          "config": { "text": "Dernière étape, quelle est votre adresse de livraison ?" }
+        },
+        { "type": "listen_and_understand", "config": { "timeout": 20 } }
+      ],
+      "transitions": [
+        { "condition": "entities.address", "targetState": "finalisation" }
+      ]
+    },
+    {
+      "id": "finalisation",
+      "name": "Finalisation",
+      "onEnter": [
+        { "type": "save_to_drive", "config": { "sheet": "Commandes" } },
+        { "type": "send_sms_confirmation", "config": { "template": "commande_pret" } },
+        {
+          "type": "speak_to_caller",
+          "config": { "text": "Merci ! Votre commande est enregistrée et sera livrée à {{delivery_address}}. Bonne journée !" }
+        }
+      ],
+      "transitions": []
+    },
+    {
+      "id": "reservation_table",
+      "name": "Réservation Table",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Pour combien de personnes et à quelle heure ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "entities.guests && entities.time", "targetState": "finalisation_reservation" }
+      ]
+    },
+    {
+      "id": "finalisation_reservation",
+      "name": "Finalisation Réservation",
+      "onEnter": [
+        { "type": "save_to_drive", "config": { "sheet": "Reservations" } },
+        { "type": "speak_to_caller", "config": { "text": "C'est noté pour {{entities.guests}} personnes à {{entities.time}}. À tout à l'heure !" } }
+      ],
+      "transitions": []
+    },
+    {
+      "id": "clarification",
+      "name": "Clarification",
+      "isFallback": true,
+      "onEnter": [
+        {
+          "type": "speak_to_caller",
+          "config": { "text": "Je suis désolé, je n'ai pas bien saisi. Pouvez-vous répéter votre demande ?" }
+        },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "true", "targetState": "accueil" }
+      ]
+    }
+  ]
+}

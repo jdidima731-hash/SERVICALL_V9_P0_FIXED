@@ -1,0 +1,100 @@
+# ============================================================
+# SERVICALL V8 — docker-compose.yml Production (HARDENED)
+# ✅ RÉSEAUX : Isolation via réseau interne
+# ✅ PORTS : Restriction à 127.0.0.1
+# ✅ SÉCURITÉ : cap_drop, no-new-privileges
+# ============================================================
+
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: servicall:v8
+    container_name: servicall_app
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5000:5000" # ✅ RESTRICTION : Uniquement accessible via localhost
+    environment:
+      NODE_ENV: production
+      PORT: "5000"
+      DATABASE_URL: postgresql://servicall:${POSTGRES_PASSWORD}@db:5432/servicall
+      REDIS_URL: redis://redis:6379
+      # Secrets — tous requis, à définir dans .env
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      TENANT_JWT_SECRET: ${TENANT_JWT_SECRET}
+      SESSION_SECRET: ${SESSION_SECRET}
+      CSRF_SECRET: ${CSRF_SECRET}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      ENCRYPTION_SALT: ${ENCRYPTION_SALT}
+      MASTER_KEY: ${MASTER_KEY}
+      COOKIE_SECRET: ${COOKIE_SECRET}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:5000/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    volumes:
+      - app_uploads:/app/uploads
+    networks:
+      - internal
+    # ✅ SÉCURITÉ CONTAINER
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+  db:
+    image: postgres:16-alpine
+    container_name: servicall_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: servicall
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: servicall
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U servicall -d servicall"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - internal
+    # Pas de ports exposés publiquement
+
+  redis:
+    image: redis:7-alpine
+    container_name: servicall_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - internal
+    # Pas de ports exposés publiquement
+
+networks:
+  internal:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  app_uploads:

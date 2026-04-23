@@ -1,0 +1,52 @@
+{
+  "billing": {
+    "title": "Facturation",
+    "subtitle": "Gérez vos factures et votre abonnement",
+    "subscription": "Abonnement",
+    "payment_method": "Méthode de paiement",
+    "invoices": "Factures",
+    "status_paid": "PAYÉE",
+    "status_pending": "EN ATTENTE",
+    "status_failed": "ÉCHOUÉE",
+    "status_active": "ACTIF",
+    "download": "Télécharger",
+    "downloading": "Téléchargement de la facture en cours...",
+    "error_portal": "Erreur lors de l'ouverture du portail de facturation : ",
+    "error_payment": "Erreur lors de la génération du lien de paiement : ",
+    "no_invoices": "Aucune facture trouvée"
+  },
+  "campaigns": {
+    "title": "Campagnes",
+    "subtitle": "Gérez vos campagnes marketing",
+    "create_campaign": "Créer une campagne",
+    "campaign_name": "Nom de la campagne",
+    "status": "Statut",
+    "actions": "Actions",
+    "start": "Démarrer",
+    "stop": "Arrêter",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "import_csv": "Importer CSV",
+    "no_campaigns": "Aucune campagne trouvée"
+  },
+  "softphone": {
+    "title": "Téléphone",
+    "subtitle": "Passez et recevez des appels",
+    "loading": "Chargement du softphone...",
+    "not_configured": "Le softphone n'est pas configuré",
+    "configure": "Configurer",
+    "twilio_config": "Configuration Twilio",
+    "ready": "Prêt",
+    "configured": "Configuré",
+    "missing": "Manquant"
+  },
+  "calendar": {
+    "title": "Calendrier",
+    "subtitle": "Gérez vos rendez-vous",
+    "month": "Mois",
+    "week": "Semaine",
+    "day": "Jour",
+    "new_appointment": "Nouveau rendez-vous",
+    "no_appointments": "Aucun rendez-vous"
+  }
+}

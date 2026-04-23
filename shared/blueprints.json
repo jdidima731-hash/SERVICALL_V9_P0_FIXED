@@ -1,0 +1,2021 @@
+[
+  {
+    "id": "bp_101",
+    "name": "Téléphonie (Base) - Appel entrant",
+    "industry": "generic",
+    "systemPrompt": "Tu es un assistant de réception téléphonique professionnel. Ton but est d'accueillir le client, d'identifier son besoin et de qualifier l'urgence de sa demande.",
+    "description": "Workflow pour Appel entrant dans la catégorie Téléphonie (Base).",
+    "trigger": "call_received",
+    "actions": [
+      {
+        "type": "transcribe_call",
+        "config": {
+          "name": "Transcription"
+        }
+      },
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "Résumé IA"
+        }
+      },
+      {
+        "type": "ai_intent",
+        "config": {
+          "name": "Intention IA"
+        }
+      },
+      {
+        "type": "ai_sentiment_analysis",
+        "config": {
+          "name": "Sentiment IA"
+        }
+      },
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Création tâche CRM"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_102",
+    "name": "Téléphonie (Base) - Appel sortant",
+    "industry": "generic",
+    "systemPrompt": "Tu es un agent commercial effectuant des appels sortants. Ton ton est dynamique, persuasif mais toujours respectueux. Ton objectif est de susciter l'intérêt pour nos services.",
+    "description": "Workflow pour Appel sortant dans la catégorie Téléphonie (Base).",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      },
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "Résumé IA"
+        }
+      },
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Suivi CRM"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_103",
+    "name": "Téléphonie (Base) - Appel manqué",
+    "industry": "generic",
+    "description": "Workflow pour Appel manqué dans la catégorie Téléphonie (Base).",
+    "trigger": "call_missed",
+    "actions": [
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Création tâche rappel"
+        }
+      },
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification SMS/email"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_104",
+    "name": "Téléphonie (Base) - Appel rejeté",
+    "industry": "generic",
+    "description": "Workflow pour Appel rejeté dans la catégorie Téléphonie (Base).",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      },
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification interne"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_105",
+    "name": "Téléphonie (Base) - Appel hors horaires",
+    "industry": "generic",
+    "description": "Workflow pour Appel hors horaires dans la catégorie Téléphonie (Base).",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification agent"
+        }
+      },
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification superviseur"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_106",
+    "name": "Téléphonie (Base) - Appel transféré",
+    "industry": "generic",
+    "description": "Workflow pour Appel transféré dans la catégorie Téléphonie (Base).",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      },
+      {
+        "type": "create_task",
+        "config": {
+          "title": "Nouveau prospect à traiter",
+          "priority": "high"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_107",
+    "name": "Téléphonie (Base) - Appel en attente",
+    "industry": "generic",
+    "description": "Workflow pour Appel en attente dans la catégorie Téléphonie (Base).",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Temporisation"
+        }
+      },
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_108",
+    "name": "Téléphonie (Base) - Fin d’appel + résumé",
+    "industry": "generic",
+    "description": "Workflow pour Fin d’appel + résumé dans la catégorie Téléphonie (Base).",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "Résumé IA"
+        }
+      },
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Création note CRM"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_109",
+    "name": "Téléphonie (Base) - Enregistrement d’appel",
+    "industry": "generic",
+    "description": "Workflow pour Enregistrement d’appel dans la catégorie Téléphonie (Base).",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      },
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_110",
+    "name": "Téléphonie (Base) - Qualification post-appel",
+    "industry": "generic",
+    "description": "Workflow pour Qualification post-appel dans la catégorie Téléphonie (Base).",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      },
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      },
+      {
+        "type": "ai_score",
+        "config": {
+          "name": "Scoring lead"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_111",
+    "name": "Leads & Clients - Création automatique de lead",
+    "industry": "generic",
+    "description": "Workflow pour Création automatique de lead dans la catégorie Leads & Clients.",
+    "trigger": "prospect_created",
+    "actions": [
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Créer tâche CRM"
+        }
+      },
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_112",
+    "name": "Leads & Clients - Création manuelle de lead",
+    "industry": "generic",
+    "description": "Workflow pour Création manuelle de lead dans la catégorie Leads & Clients.",
+    "trigger": "prospect_created",
+    "actions": [
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Créer tâche CRM"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_113",
+    "name": "Leads & Clients - Qualification lead",
+    "industry": "generic",
+    "description": "Workflow pour Qualification lead dans la catégorie Leads & Clients.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "Changer statut"
+        }
+      },
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Ajouter note"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_114",
+    "name": "Leads & Clients - Attribution agent",
+    "industry": "generic",
+    "description": "Workflow pour Attribution agent dans la catégorie Leads & Clients.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "create_task",
+        "config": {
+          "title": "Nouveau prospect à traiter",
+          "priority": "high"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_115",
+    "name": "Leads & Clients - Réattribution agent",
+    "industry": "generic",
+    "description": "Workflow pour Réattribution agent dans la catégorie Leads & Clients.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "create_task",
+        "config": {
+          "title": "Nouveau prospect à traiter",
+          "priority": "high"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_116",
+    "name": "Leads & Clients - Mise à jour statut",
+    "industry": "generic",
+    "description": "Workflow pour Mise à jour statut dans la catégorie Leads & Clients.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "Changer statut"
+        }
+      },
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_117",
+    "name": "Leads & Clients - Lead non joignable",
+    "industry": "generic",
+    "description": "Workflow pour Lead non joignable dans la catégorie Leads & Clients.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Escalade"
+        }
+      },
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification agent"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_118",
+    "name": "Leads & Clients - Lead perdu",
+    "industry": "generic",
+    "description": "Workflow pour Lead perdu dans la catégorie Leads & Clients.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      },
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_119",
+    "name": "Leads & Clients - Lead converti client",
+    "industry": "generic",
+    "description": "Workflow pour Lead converti client dans la catégorie Leads & Clients.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      },
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification CRM interne"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_120",
+    "name": "Relances & Suivi - Rappel immédiat",
+    "industry": "generic",
+    "description": "Workflow pour Rappel immédiat dans la catégorie Relances & Suivi.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Envoi SMS/email"
+        }
+      },
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_121",
+    "name": "Relances & Suivi - Rappel planifié",
+    "industry": "generic",
+    "description": "Workflow pour Rappel planifié dans la catégorie Relances & Suivi.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Temporisation"
+        }
+      },
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Envoi SMS/email"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_122",
+    "name": "Relances & Suivi - Relance après appel manqué",
+    "industry": "generic",
+    "description": "Workflow pour Relance après appel manqué dans la catégorie Relances & Suivi.",
+    "trigger": "call_missed",
+    "actions": [
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification client"
+        }
+      },
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_123",
+    "name": "Relances & Suivi - Relance multi-tentatives",
+    "industry": "generic",
+    "description": "Workflow pour Relance multi-tentatives dans la catégorie Relances & Suivi.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_score",
+        "config": {
+          "name": "IF/ELSE conditionnel"
+        }
+      },
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Temporisation"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_124",
+    "name": "Relances & Suivi - Escalade sans réponse",
+    "industry": "generic",
+    "description": "Workflow pour Escalade sans réponse dans la catégorie Relances & Suivi.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification superviseur"
+        }
+      },
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_125",
+    "name": "Relances & Suivi - Relance après devis",
+    "industry": "generic",
+    "description": "Workflow pour Relance après devis dans la catégorie Relances & Suivi.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Envoi Email/SMS"
+        }
+      },
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification client"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_126",
+    "name": "Relances & Suivi - Relance après RDV manqué",
+    "industry": "generic",
+    "description": "Workflow pour Relance après RDV manqué dans la catégorie Relances & Suivi.",
+    "trigger": "call_missed",
+    "actions": [
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Envoi SMS/email"
+        }
+      },
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_127",
+    "name": "Messages & Notifications - SMS automatique",
+    "industry": "generic",
+    "description": "Workflow pour SMS automatique dans la catégorie Messages & Notifications.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Envoi SMS"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_128",
+    "name": "Messages & Notifications - Email automatique",
+    "industry": "generic",
+    "description": "Workflow pour Email automatique dans la catégorie Messages & Notifications.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_email",
+        "config": {
+          "name": "Envoi Email"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_129",
+    "name": "Messages & Notifications - WhatsApp (optionnel)",
+    "industry": "generic",
+    "description": "Workflow pour WhatsApp (optionnel) dans la catégorie Messages & Notifications.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_whatsapp",
+        "config": {
+          "name": "Envoi WhatsApp"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_130",
+    "name": "Messages & Notifications - Message vocal auto",
+    "industry": "generic",
+    "description": "Workflow pour Message vocal auto dans la catégorie Messages & Notifications.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Envoi audio"
+        }
+      },
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_131",
+    "name": "Messages & Notifications - Notification agent",
+    "industry": "generic",
+    "description": "Workflow pour Notification agent dans la catégorie Messages & Notifications.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification interne"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_132",
+    "name": "Messages & Notifications - Notification superviseur",
+    "industry": "generic",
+    "description": "Workflow pour Notification superviseur dans la catégorie Messages & Notifications.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification interne"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_133",
+    "name": "Messages & Notifications - Notification client",
+    "industry": "generic",
+    "description": "Workflow pour Notification client dans la catégorie Messages & Notifications.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification externe"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_134",
+    "name": "Messages & Notifications - Notification CRM interne",
+    "industry": "generic",
+    "description": "Workflow pour Notification CRM interne dans la catégorie Messages & Notifications.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_135",
+    "name": "RDV & Agenda - Création RDV",
+    "industry": "generic",
+    "description": "Workflow pour Création RDV dans la catégorie RDV & Agenda.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Créer tâche CRM"
+        }
+      },
+      {
+        "type": "create_appointment",
+        "config": {
+          "name": "Ajouter au calendrier"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_136",
+    "name": "RDV & Agenda - Confirmation RDV",
+    "industry": "generic",
+    "description": "Workflow pour Confirmation RDV dans la catégorie RDV & Agenda.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Envoi SMS/email"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_137",
+    "name": "RDV & Agenda - Rappel avant RDV",
+    "industry": "generic",
+    "description": "Workflow pour Rappel avant RDV dans la catégorie RDV & Agenda.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Temporisation"
+        }
+      },
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Envoi notification"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_138",
+    "name": "RDV & Agenda - Annulation RDV",
+    "industry": "generic",
+    "description": "Workflow pour Annulation RDV dans la catégorie RDV & Agenda.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      },
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_139",
+    "name": "RDV & Agenda - Reprogrammation RDV",
+    "industry": "generic",
+    "description": "Workflow pour Reprogrammation RDV dans la catégorie RDV & Agenda.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "create_appointment",
+        "config": {
+          "name": "Mise à jour RDV"
+        }
+      },
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_140",
+    "name": "RDV & Agenda - RDV non honoré",
+    "industry": "generic",
+    "description": "Workflow pour RDV non honoré dans la catégorie RDV & Agenda.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Escalade"
+        }
+      },
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_141",
+    "name": "RH / Recrutement - Réception CV par email",
+    "industry": "hr",
+    "description": "Workflow pour Réception CV par email dans la catégorie RH / Recrutement.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "Détection IA"
+        }
+      },
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "Extraction données"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_142",
+    "name": "RH / Recrutement - Détection automatique CV",
+    "industry": "hr",
+    "description": "Workflow pour Détection automatique CV dans la catégorie RH / Recrutement.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "Extraction données"
+        }
+      },
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "Classification"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_143",
+    "name": "RH / Recrutement - Extraction données CV",
+    "industry": "hr",
+    "description": "Workflow pour Extraction données CV dans la catégorie RH / Recrutement.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "IA"
+        }
+      },
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_144",
+    "name": "RH / Recrutement - Classification CV par métier",
+    "industry": "hr",
+    "description": "Workflow pour Classification CV par métier dans la catégorie RH / Recrutement.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "IA"
+        }
+      },
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_145",
+    "name": "RH / Recrutement - Scoring CV",
+    "industry": "hr",
+    "description": "Workflow pour Scoring CV dans la catégorie RH / Recrutement.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "IA"
+        }
+      },
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_146",
+    "name": "RH / Recrutement - Enregistrement CV",
+    "industry": "hr",
+    "description": "Workflow pour Enregistrement CV dans la catégorie RH / Recrutement.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "Stockage Drive/BD"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_147",
+    "name": "RH / Recrutement - Ajout ligne tableau RH",
+    "industry": "hr",
+    "description": "Workflow pour Ajout ligne tableau RH dans la catégorie RH / Recrutement.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Création tâche CRM"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_148",
+    "name": "RH / Recrutement - Notification RH",
+    "industry": "hr",
+    "description": "Workflow pour Notification RH dans la catégorie RH / Recrutement.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification interne"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_149",
+    "name": "RH / Recrutement - Réponse automatique candidat",
+    "industry": "hr",
+    "description": "Workflow pour Réponse automatique candidat dans la catégorie RH / Recrutement.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Envoi Email/SMS"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_150",
+    "name": "RH / Recrutement - Archivage CV",
+    "industry": "hr",
+    "description": "Workflow pour Archivage CV dans la catégorie RH / Recrutement.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      },
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_151",
+    "name": "Restauration - Appel prise de commande",
+    "industry": "restaurant",
+    "description": "Workflow pour Appel prise de commande dans la catégorie Restauration.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "transcribe_call",
+        "config": {
+          "name": "Transcription"
+        }
+      },
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Création tâche CRM"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_152",
+    "name": "Restauration - Identification client",
+    "industry": "restaurant",
+    "description": "Workflow pour Identification client dans la catégorie Restauration.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_153",
+    "name": "Restauration - Enregistrement commande",
+    "industry": "restaurant",
+    "description": "Workflow pour Enregistrement commande dans la catégorie Restauration.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Créer tâche"
+        }
+      },
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_154",
+    "name": "Restauration - Confirmation commande",
+    "industry": "restaurant",
+    "description": "Workflow pour Confirmation commande dans la catégorie Restauration.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "SMS/Email"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_155",
+    "name": "Restauration - Transmission cuisine",
+    "industry": "restaurant",
+    "description": "Workflow pour Transmission cuisine dans la catégorie Restauration.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Webhook interne"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_156",
+    "name": "Restauration - Estimation délai",
+    "industry": "restaurant",
+    "description": "Workflow pour Estimation délai dans la catégorie Restauration.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "Calcul IA"
+        }
+      },
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_157",
+    "name": "Restauration - Mise à jour statut commande",
+    "industry": "restaurant",
+    "description": "Workflow pour Mise à jour statut commande dans la catégorie Restauration.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "Changer statut"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_158",
+    "name": "Restauration - Commande annulée",
+    "industry": "restaurant",
+    "description": "Workflow pour Commande annulée dans la catégorie Restauration.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification"
+        }
+      },
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_159",
+    "name": "Restauration - Commande terminée",
+    "industry": "restaurant",
+    "description": "Workflow pour Commande terminée dans la catégorie Restauration.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_160",
+    "name": "Restauration - Historisation commande",
+    "industry": "restaurant",
+    "description": "Workflow pour Historisation commande dans la catégorie Restauration.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_161",
+    "name": "Logistique / Livraison - Création demande livraison",
+    "industry": "delivery",
+    "description": "Workflow pour Création demande livraison dans la catégorie Logistique / Livraison.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Créer tâche CRM"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_162",
+    "name": "Logistique / Livraison - Attribution livreur",
+    "industry": "delivery",
+    "description": "Workflow pour Attribution livreur dans la catégorie Logistique / Livraison.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "Changer agent"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_163",
+    "name": "Logistique / Livraison - Confirmation prise en charge",
+    "industry": "delivery",
+    "description": "Workflow pour Confirmation prise en charge dans la catégorie Logistique / Livraison.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification client"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_164",
+    "name": "Logistique / Livraison - Suivi statut livraison",
+    "industry": "delivery",
+    "description": "Workflow pour Suivi statut livraison dans la catégorie Logistique / Livraison.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_165",
+    "name": "Logistique / Livraison - Retard détecté",
+    "industry": "delivery",
+    "description": "Workflow pour Retard détecté dans la catégorie Logistique / Livraison.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification client"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_166",
+    "name": "Logistique / Livraison - Notification client",
+    "industry": "delivery",
+    "description": "Workflow pour Notification client dans la catégorie Logistique / Livraison.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification externe"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_167",
+    "name": "Logistique / Livraison - Livraison confirmée",
+    "industry": "delivery",
+    "description": "Workflow pour Livraison confirmée dans la catégorie Logistique / Livraison.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      },
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_168",
+    "name": "Logistique / Livraison - Échec livraison",
+    "industry": "delivery",
+    "description": "Workflow pour Échec livraison dans la catégorie Logistique / Livraison.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Escalade"
+        }
+      },
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_169",
+    "name": "Logistique / Livraison - Reprogrammation livraison",
+    "industry": "delivery",
+    "description": "Workflow pour Reprogrammation livraison dans la catégorie Logistique / Livraison.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "create_appointment",
+        "config": {
+          "name": "Mise à jour RDV"
+        }
+      },
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_170",
+    "name": "Logistique / Livraison - Clôture livraison",
+    "industry": "delivery",
+    "description": "Workflow pour Clôture livraison dans la catégorie Logistique / Livraison.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      },
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_171",
+    "name": "Admin / Archivage / Data - Clôture workflow",
+    "industry": "generic",
+    "description": "Workflow pour Clôture workflow dans la catégorie Admin / Archivage / Data.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      },
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_172",
+    "name": "Admin / Archivage / Data - Archivage lead",
+    "industry": "generic",
+    "description": "Workflow pour Archivage lead dans la catégorie Admin / Archivage / Data.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      },
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_173",
+    "name": "Admin / Archivage / Data - Archivage appel",
+    "industry": "generic",
+    "description": "Workflow pour Archivage appel dans la catégorie Admin / Archivage / Data.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      },
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_174",
+    "name": "Admin / Archivage / Data - Historisation CRM",
+    "industry": "generic",
+    "description": "Workflow pour Historisation CRM dans la catégorie Admin / Archivage / Data.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_175",
+    "name": "Admin / Archivage / Data - Export données",
+    "industry": "generic",
+    "description": "Workflow pour Export données dans la catégorie Admin / Archivage / Data.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_176",
+    "name": "Admin / Archivage / Data - Journal d’activité",
+    "industry": "generic",
+    "description": "Workflow pour Journal d’activité dans la catégorie Admin / Archivage / Data.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "mode": "full",
+          "notify": true
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_177",
+    "name": "Intelligence & Règles - Routage intelligent par métier",
+    "industry": "generic",
+    "description": "Workflow pour Routage intelligent par métier dans la catégorie Intelligence & Règles.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "IF/ELSE"
+        }
+      },
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_178",
+    "name": "Intelligence & Règles - Routage par disponibilité agent",
+    "industry": "generic",
+    "description": "Workflow pour Routage par disponibilité agent dans la catégorie Intelligence & Règles.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "IF/ELSE"
+        }
+      },
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_179",
+    "name": "Intelligence & Règles - Routage par priorité",
+    "industry": "generic",
+    "description": "Workflow pour Routage par priorité dans la catégorie Intelligence & Règles.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "IF/ELSE"
+        }
+      },
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_180",
+    "name": "Intelligence & Règles - Scoring lead IA",
+    "industry": "generic",
+    "description": "Workflow pour Scoring lead IA dans la catégorie Intelligence & Règles.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_summary",
+        "config": {
+          "name": "IA"
+        }
+      },
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_181",
+    "name": "Intelligence & Règles - IF / ELSE conditionnel",
+    "industry": "generic",
+    "description": "Workflow pour IF / ELSE conditionnel dans la catégorie Intelligence & Règles.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_score",
+        "config": {
+          "name": "Logique"
+        }
+      },
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Temporisation"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_182",
+    "name": "Intelligence & Règles - Délais & temporisation",
+    "industry": "generic",
+    "description": "Workflow pour Délais & temporisation dans la catégorie Intelligence & Règles.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "create_task",
+        "config": {
+          "name": "Temporisation"
+        }
+      },
+      {
+        "type": "send_sms",
+        "config": {
+          "name": "Notification"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_183",
+    "name": "Cabinet Médical - Prise de RDV",
+    "industry": "medical_practice",
+    "description": "Workflow pour la prise de rendez-vous médicaux.",
+    "trigger": "call_received",
+    "actions": [
+      {
+        "type": "create_appointment"
+      },
+      {
+        "type": "send_sms"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_184",
+    "name": "Cabinet Médical - Rappel RDV",
+    "industry": "medical_practice",
+    "description": "Workflow pour l'envoi de rappels de rendez-vous.",
+    "trigger": "schedule_event",
+    "actions": [
+      {
+        "type": "send_sms"
+      },
+      {
+        "type": "send_email"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_185",
+    "name": "Cabinet Médical - Urgence Médicale",
+    "industry": "medical_practice",
+    "description": "Workflow pour la gestion des appels d'urgence.",
+    "trigger": "call_received",
+    "actions": [
+      {
+        "type": "send_sms"
+      },
+      {
+        "type": "create_task"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_186",
+    "name": "Cabinet Juridique - Consultation Initiale",
+    "industry": "legal_firm",
+    "description": "Workflow pour la planification d'une consultation juridique initiale.",
+    "trigger": "call_received",
+    "actions": [
+      {
+        "type": "create_appointment"
+      },
+      {
+        "type": "ai_summary"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_187",
+    "name": "Cabinet Juridique - Suivi de Dossier",
+    "industry": "legal_firm",
+    "description": "Workflow pour le suivi de l'avancement d'un dossier client.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      },
+      {
+        "type": "send_email"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_188",
+    "name": "Cabinet Juridique - Rappel de Paiement",
+    "industry": "legal_firm",
+    "description": "Workflow pour l'envoi de rappels de paiement de factures.",
+    "trigger": "schedule_event",
+    "actions": [
+      {
+        "type": "send_email"
+      },
+      {
+        "type": "create_task"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_189",
+    "name": "Infogérance - Support Technique Niveau 1",
+    "industry": "it_services",
+    "description": "Workflow pour la gestion des demandes de support technique de niveau 1.",
+    "trigger": "call_received",
+    "actions": [
+      {
+        "type": "create_task"
+      },
+      {
+        "type": "ai_intent"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_190",
+    "name": "Infogérance - Escalade Incident",
+    "industry": "it_services",
+    "description": "Workflow pour l'escalade d'un incident au niveau supérieur.",
+    "trigger": "task_escalated",
+    "actions": [
+      {
+        "type": "send_sms"
+      },
+      {
+        "type": "create_task"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_191",
+    "name": "Infogérance - Maintenance Préventive",
+    "industry": "it_services",
+    "description": "Workflow pour la planification et la notification de maintenance préventive.",
+    "trigger": "schedule_event",
+    "actions": [
+      {
+        "type": "send_email"
+      },
+      {
+        "type": "create_task"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_192",
+    "name": "Agence Immobilière - Prise de RDV Visite",
+    "industry": "real_estate",
+    "description": "Workflow pour la prise de rendez-vous de visite de biens immobiliers.",
+    "trigger": "call_received",
+    "actions": [
+      {
+        "type": "create_appointment"
+      },
+      {
+        "type": "send_sms"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_193",
+    "name": "Agence Immobilière - Suivi Prospect Acheteur",
+    "industry": "real_estate",
+    "description": "Workflow pour le suivi des prospects acheteurs.",
+    "trigger": "prospect_created",
+    "actions": [
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      },
+      {
+        "type": "send_email"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_194",
+    "name": "Agence Immobilière - Offre Reçue",
+    "industry": "real_estate",
+    "description": "Workflow pour la notification et le traitement d'une offre reçue.",
+    "trigger": "email_received",
+    "actions": [
+      {
+        "type": "send_sms"
+      },
+      {
+        "type": "create_task"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_195",
+    "name": "E-commerce - Confirmation Commande",
+    "industry": "e_commerce",
+    "description": "Workflow pour l'envoi de la confirmation de commande.",
+    "trigger": "order_placed",
+    "actions": [
+      {
+        "type": "send_email"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_196",
+    "name": "E-commerce - Suivi Livraison",
+    "industry": "e_commerce",
+    "description": "Workflow pour le suivi de l'état de la livraison.",
+    "trigger": "order_shipped",
+    "actions": [
+      {
+        "type": "send_sms"
+      },
+      {
+        "type": "ai_score",
+        "config": {
+          "criteria": "conversion_probability"
+        }
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_197",
+    "name": "E-commerce - Support Client Post-Achat",
+    "industry": "e_commerce",
+    "description": "Workflow pour la gestion des demandes de support après achat.",
+    "trigger": "call_received",
+    "actions": [
+      {
+        "type": "create_task"
+      },
+      {
+        "type": "ai_summary"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_198",
+    "name": "Centre d'Appels - Qualification Appel Entrant",
+    "industry": "call_center",
+    "description": "Workflow pour la qualification des appels entrants.",
+    "trigger": "call_received",
+    "actions": [
+      {
+        "type": "ai_intent"
+      },
+      {
+        "type": "create_task"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_199",
+    "name": "Centre d'Appels - Enquête Satisfaction",
+    "industry": "call_center",
+    "description": "Workflow pour l'envoi d'une enquête de satisfaction après appel.",
+    "trigger": "call_completed",
+    "actions": [
+      {
+        "type": "send_sms"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "bp_200",
+    "name": "Centre d'Appels - Formation Agent",
+    "industry": "call_center",
+    "description": "Workflow pour l'assignation de modules de formation aux agents.",
+    "trigger": "agent_performance_review",
+    "actions": [
+      {
+        "type": "create_task"
+      },
+      {
+        "type": "send_email"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "id": "whatsapp-vendor",
+    "name": "Agent Vendeur WhatsApp",
+    "industry": "commerce",
+    "trigger": "whatsapp_message_received",
+    "description": "Workflow complet : accueil → identification besoin → vérification stock → commande → paiement → suivi → upsell",
+    "actions": [
+      {
+        "type": "ai_intent",
+        "config": {
+          "categories": [
+            "COMMANDE",
+            "SUIVI",
+            "INFO_PRODUIT",
+            "SAV"
+          ]
+        }
+      },
+      {
+        "type": "query_business_entities",
+        "config": {
+          "type": "product"
+        }
+      },
+      {
+        "type": "create_order",
+        "config": {
+          "currency": "EUR"
+        }
+      },
+      {
+        "type": "request_payment",
+        "config": {
+          "currency": "EUR"
+        }
+      },
+      {
+        "type": "send_whatsapp",
+        "config": {
+          "message": "Votre commande est prête."
+        }
+      }
+    ],
+    "version": "1.0.0"
+  }
+]

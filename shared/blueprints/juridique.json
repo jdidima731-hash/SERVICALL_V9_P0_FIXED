@@ -1,0 +1,79 @@
+{
+  "id": "juridique-collecte",
+  "name": "Juridique Collecte",
+  "industry": "juridique",
+  "initialState": "accueil",
+  "fallbackState": "clarification",
+  "context": {
+    "activity_type": "juridique_collecte",
+    "dossier_id": null,
+    "consentement_vocal": false
+  },
+  "states": [
+    {
+      "id": "accueil",
+      "name": "Accueil",
+      "onEnter": [
+        { "type": "load_callcenter_script", "config": { "activity": "juridique_collecte" } },
+        { "type": "speak_to_caller", "config": { "text": "{{pitch}}" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'confirm'", "targetState": "consentement_vocal" }
+      ]
+    },
+    {
+      "id": "consentement_vocal",
+      "name": "Consentement Vocal",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Pour la sécurité de votre dossier, confirmez-vous par 'OUI' que vous m'autorisez à enregistrer vos informations confidentielles ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'confirm'", "targetState": "qualification_affaire" },
+        { "condition": "intent === 'refuse'", "targetState": "fin_appel" }
+      ]
+    },
+    {
+      "id": "qualification_affaire",
+      "name": "Qualification Affaire",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "{{questions_qualification[0].text}}" } },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "entities.type_affaire", "targetState": "qualification_dates" }
+      ]
+    },
+    {
+      "id": "qualification_dates",
+      "name": "Qualification Dates",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "{{questions_qualification[1].text}}" } },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "entities.dates_cles", "targetState": "finalisation_dossier" }
+      ]
+    },
+    {
+      "id": "finalisation_dossier",
+      "name": "Finalisation Dossier",
+      "onEnter": [
+        { "type": "generate_legal_summary", "config": { "format": "pdf" } },
+        { "type": "create_drive_folder", "config": { "name": "Dossier_{{customer_name}}" } },
+        { "type": "send_secure_sms_link", "config": { "template": "lien_dossier" } },
+        { "type": "speak_to_caller", "config": { "text": "Merci. Votre dossier est créé et un lien sécurisé vient de vous être envoyé par SMS pour déposer vos documents. Bonne journée." } }
+      ],
+      "transitions": []
+    },
+    {
+      "id": "fin_appel",
+      "name": "Fin d'appel",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Je comprends. Nous ne pouvons pas continuer sans votre consentement. Au revoir." } }
+      ],
+      "transitions": []
+    }
+  ]
+}

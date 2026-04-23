@@ -1,0 +1,123 @@
+{
+  "title": "Dashboard",
+  "subtitle": "Overview",
+  "admin_console": "Admin Console",
+  "welcome": "Welcome to {{tenantName}}, {{userName}}.",
+  "invalid_session": "Invalid session",
+  "relogin_required": "Please log in again.",
+  "tenant_not_selected": "Company not selected",
+  "select_tenant_instruction": "Please select a company from the menu.",
+  "onboarding_guide": "Welcome Guide",
+  "admin_mode": "ADMIN MODE",
+  "live": "Live",
+  "priority_followups": "Priority Follow-ups",
+  "prospects_count": "{{count}} prospects",
+  "daily_planning": "Daily Planning",
+  "appointments_count": "{{count}} Appt",
+  "ip_telephony": "IP Telephony",
+  "operational": "Operational",
+  "stats": {
+    "total_calls": "Calls Handled",
+    "total_calls_tooltip": "Total number of inbound and outbound calls managed by the platform over the selected period.",
+    "new_prospects": "New Prospects",
+    "new_prospects_tooltip": "Number of new qualified contacts added to your database.",
+    "appointments": "Confirmed Appt",
+    "appointments_tooltip": "Number of appointments with status marked as 'confirmed'.",
+    "conversion_rate": "Conversion Rate",
+    "conversion_rate_tooltip": "Percentage of prospects converted into customers or who completed a key action."
+  },
+  "charts": {
+    "calls_trend": "Calls Trend",
+    "conversion": "Conversion Rate",
+    "current_week": "Current Week",
+    "no_data": "No data available",
+    "vs_yesterday": "vs yesterday"
+  },
+  "loading_data": "Loading your data...",
+  "error_title": "Dashboard Loading Error",
+  "error_message": "Unable to load data. Please try again.",
+  "ai_transparency": {
+    "title": "AI Transparency",
+    "automation_rate": "Automation Rate",
+    "false_positives": "False Positives",
+    "false_negatives": "False Negatives",
+    "agreement_rate": "Human/AI Agreement Rate"
+  },
+  "audit_logs": {
+    "title": "Audit Logs & Traceability",
+    "no_logs": "No audit logs available"
+  },
+  "recent_activity": "Recent call activity",
+  "pages": {
+    "dashboard": {
+      "real_time_supervision": "Real-time supervision of your agency",
+      "day": "Day",
+      "week": "Week",
+      "month": "Month",
+      "vs_previous": "vs previous period",
+      "at_risk_agents": "At-risk Agents",
+      "no_at_risk": "No at-risk agents detected",
+      "quality_score": "Quality Score",
+      "calls_activity": "Calls Activity"
+    },
+    "calls": {
+      "title": "Calls History",
+      "subtitle": "View your full history of calls and interactions.",
+      "call": "Call",
+      "export": "Export",
+      "search_placeholder": "Search by name or number...",
+      "all_calls": "All calls",
+      "inbound_calls": "Inbound calls",
+      "outbound_calls": "Outbound calls",
+      "missed_calls": "Missed calls",
+      "most_recent": "Most recent",
+      "duration_long": "Duration (long)",
+      "table_title": "Calls",
+      "table_subtitle": "Detail of all calls",
+      "no_calls": "No calls found",
+      "contact": "Contact",
+      "type": "Type",
+      "date": "Date",
+      "duration": "Duration",
+      "actions": "Actions",
+      "inbound": "Inbound",
+      "outbound": "Outbound",
+      "missed": "Missed",
+      "dialing_to": "Dialing to {{number}}..."
+    },
+    "prospects": {
+      "title": "Prospects Management",
+      "subtitle": "Drive your sales pipeline with the Elite Kanban system.",
+      "import_csv": "Import CSV",
+      "export": "Export",
+      "new_prospect": "New Prospect",
+      "search_placeholder": "Search a prospect...",
+      "kanban": "Kanban",
+      "list": "List",
+      "loading": "Loading prospects...",
+      "error_title": "Loading error",
+      "error_message": "Unable to load prospects. Please check your connection.",
+      "no_prospects": "No prospects",
+      "no_prospects_desc": "Start by adding your first prospect or import a list from a CSV file.",
+      "no_results": "No results",
+      "no_results_desc": "No prospect matches the search \"{{searchTerm}}\".",
+      "reset_search": "Reset search",
+      "moved_to": "Prospect moved to {{status}}",
+      "table": {
+        "name": "Name",
+        "company": "Company",
+        "email": "Email",
+        "status": "Status"
+      },
+      "columns": {
+        "new": "New",
+        "contacted": "Contacted",
+        "qualified": "Qualified",
+        "proposal": "Proposal",
+        "negotiation": "Negotiation",
+        "converted": "Won",
+        "lost": "Lost"
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "title": "Paramètres",
+  "subtitle": "Gérez votre compte et vos préférences",
+  "tabs": {
+    "apps": "Apps",
+    "profile": "Profil",
+    "security": "Sécurité",
+    "notifications": "Notifications",
+    "appearance": "Apparence",
+    "team": "Équipe",
+    "business": "Métier",
+    "cashier": "Caisse",
+    "monitoring": "Monitoring"
+  },
+  "profile": {
+    "title": "Profil",
+    "description": "Mettez à jour vos informations personnelles",
+    "avatar": "Photo de profil",
+    "change_avatar": "Changer l'avatar",
+    "first_name": "Prénom",
+    "last_name": "Nom",
+    "email": "Adresse email",
+    "phone": "Numéro de téléphone",
+    "save_success": "Profil enregistré avec succès"
+  },
+  "appearance": {
+    "title": "Apparence",
+    "description": "Personnalisez l'apparence de votre application",
+    "theme": "Thème",
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système",
+    "save_success": "Paramètres d'apparence enregistrés"
+  },
+  "danger_zone": {
+    "title": "Zone Dangereuse",
+    "description": "Actions irréversibles",
+    "delete_account": "Supprimer le compte",
+    "delete_account_warning": "Cette action ne peut pas être annulée. Toutes vos données seront supprimées de manière permanente."
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "prospection_isolation": {
+    "activity_type": "prospection",
+    "objectives": ["Qualifier le lead", "Prendre un RDV technique"],
+    "pitch": "Bonjour, je vous appelle dans le cadre du programme national pour l'amélioration de l'habitat.",
+    "bénéfices": ["Économie d'énergie", "Confort thermique", "Aides de l'État"],
+    "questions_qualification": [
+      { "id": "proprio", "text": "Êtes-vous propriétaire de votre maison ?", "type": "boolean" },
+      { "id": "chauffage", "text": "Quel est votre mode de chauffage actuel ?", "type": "string" }
+    ],
+    "objections": [
+      { "pattern": "déjà fait", "reponse": "C'est une excellente chose. Savez-vous que les normes ont évolué récemment ?" },
+      { "pattern": "pas le temps", "reponse": "Je comprends. Cela ne prendra que 2 minutes pour vérifier votre éligibilité." }
+    ],
+    "regles_metier": ["Ne jamais forcer si refus catégorique", "Consentement RGPD obligatoire"],
+    "actions_finales": ["update_crm_lead", "notify_slack_hot_lead", "send_sms_confirmation"]
+  },
+  "juridique_collecte": {
+    "activity_type": "juridique",
+    "objectives": ["Collecter les pièces du dossier", "Qualifier l'urgence"],
+    "pitch": "Bonjour, cabinet juridique en ligne. Je vous appelle pour finaliser l'ouverture de votre dossier.",
+    "bénéfices": ["Gain de temps", "Traitement prioritaire"],
+    "questions_qualification": [
+      { "id": "type_affaire", "text": "S'agit-il d'un litige civil, pénal ou du travail ?", "type": "string" },
+      { "id": "dates_cles", "text": "Avez-vous des dates d'audience ou des délais de recours ?", "type": "string" }
+    ],
+    "objections": [
+      { "pattern": "cher", "reponse": "Nos honoraires sont transparents et peuvent être pris en charge par votre protection juridique." }
+    ],
+    "regles_metier": ["Confidentialité absolue", "Consentement vocal enregistré"],
+    "actions_finales": ["generate_legal_summary", "create_drive_folder", "send_secure_sms_link"]
+  },
+  "logistique_suivi": {
+    "activity_type": "logistique",
+    "objectives": ["Informer sur le statut du colis", "Gérer les incidents de livraison"],
+    "pitch": "Bonjour, service logistique. Je vous appelle concernant votre livraison prévue ce jour.",
+    "bénéfices": ["Suivi temps réel", "Flexibilité de livraison"],
+    "questions_qualification": [
+      { "id": "num_suivi", "text": "Pourriez-vous me confirmer votre numéro de suivi ?", "type": "string" },
+      { "id": "dispo", "text": "Serez-vous présent entre 14h et 16h ?", "type": "boolean" }
+    ],
+    "objections": [
+      { "pattern": "pas reçu", "reponse": "Je vérifie immédiatement la position du livreur dans notre système." }
+    ],
+    "regles_metier": ["Précision chirurgicale des horaires", "Proposer reprogrammation immédiate"],
+    "actions_finales": ["reprogram_delivery", "update_delivery_db", "send_incident_sms_photo"]
+  },
+  "commerce_sav": {
+    "activity_type": "commerce",
+    "objectives": ["Résoudre le problème SAV", "Proposer une offre complémentaire"],
+    "pitch": "Bonjour, service client. J'ai bien reçu votre demande concernant votre dernier achat.",
+    "bénéfices": ["Garantie satisfaction", "Offres exclusives"],
+    "questions_qualification": [
+      { "id": "num_commande", "text": "Quel est votre numéro de commande ?", "type": "string" },
+      { "id": "motif_retour", "text": "Quel est le motif de votre demande de retour ?", "type": "string" }
+    ],
+    "objections": [
+      { "pattern": "déçu", "reponse": "Je suis sincèrement désolé. Nous allons trouver une solution qui vous convienne." }
+    ],
+    "regles_metier": ["Toujours finir sur une note positive", "Vérifier le stock en direct"],
+    "actions_finales": ["process_return", "cross_sell_suggestion", "send_discount_sms"]
+  }
+}

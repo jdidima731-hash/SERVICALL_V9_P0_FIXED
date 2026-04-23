@@ -1,0 +1,107 @@
+{
+  "id": "medical-appointment",
+  "name": "Secrétariat Médical",
+  "industry": "medical",
+  "initialState": "accueil",
+  "fallbackState": "clarification",
+  "context": {
+    "doctor_name": "Dr. Martin",
+    "urgency_detected": false,
+    "appointment_date": null,
+    "symptoms": null,
+    "consent_given": false
+  },
+  "states": [
+    {
+      "id": "accueil",
+      "name": "Accueil",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Bonjour, cabinet du {{doctor_name}}. Quel est le motif de votre appel ? S'agit-il d'une urgence ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'emergency' || entities.urgency === 'high' || entities.urgency === 'critical'", "targetState": "redirection_urgence" },
+        { "condition": "intent === 'schedule_appointment'", "targetState": "consentement_patient" }
+      ]
+    },
+    {
+      "id": "redirection_urgence",
+      "name": "Urgence",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Vos symptômes semblent nécessiter une attention immédiate. Veuillez contacter le 15 ou vous rendre aux urgences les plus proches." } }
+      ],
+      "transitions": []
+    },
+    {
+      "id": "consentement_patient",
+      "name": "Consentement Patient",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Pour créer votre dossier, m'autorisez-vous à enregistrer vos informations médicales confidentielles ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'confirm'", "targetState": "triage_medical" },
+        { "condition": "intent === 'refuse'", "targetState": "fin_appel" }
+      ]
+    },
+    {
+      "id": "triage_medical",
+      "name": "Triage Médical",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Pouvez-vous me décrire vos symptômes pour évaluer l'urgence ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "entities.urgency === 'high' || entities.urgency === 'critical'", "targetState": "redirection_urgence" },
+        { "condition": "true", "targetState": "verification_dispo" }
+      ]
+    },
+    {
+      "id": "verification_dispo",
+      "name": "Vérification Disponibilité",
+      "onEnter": [
+        { "type": "query_database", "config": { "table": "medical_appointments", "action": "check_availability" } },
+        { "type": "speak_to_caller", "config": { "text": "Je vérifie les disponibilités... J'ai un créneau libre demain à 10h. Cela vous convient-il ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "objection_handlers": {
+        "NO_TIME": "propose_alternative_dates",
+        "TOO_FAR": "propose_teleconsultation"
+      },
+      "transitions": [
+        { "condition": "intent === 'confirm'", "targetState": "finalisation" },
+        { "condition": "intent === 'refuse'", "targetState": "recherche_autre_creneau" }
+      ]
+    },
+    {
+      "id": "finalisation",
+      "name": "Finalisation",
+      "onEnter": [
+        { "type": "sync_to_calendar", "config": { "provider": "google" } },
+        { "type": "send_sms", "config": { "template": "confirmation_rdv" } },
+        { "type": "speak_to_caller", "config": { "text": "C'est noté. Votre rendez-vous est confirmé pour demain à 10h. Vous allez recevoir un SMS de confirmation." } }
+      ],
+      "transitions": []
+    },
+    {
+      "id": "fin_appel",
+      "name": "Fin d'appel",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Je comprends. Sans votre consentement, je ne peux pas prendre de rendez-vous. Au revoir." } }
+      ],
+      "transitions": []
+    },
+    {
+      "id": "clarification",
+      "name": "Clarification",
+      "isFallback": true,
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Je suis désolé, je n'ai pas compris. Souhaitez-vous prendre un rendez-vous ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'confirm'", "targetState": "consentement_patient" }
+      ]
+    }
+  ]
+}

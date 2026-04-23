@@ -1,0 +1,98 @@
+{
+  "id": "recruiter-ai",
+  "name": "Recruteur IA",
+  "industry": "recruitment",
+  "initialState": "accueil",
+  "fallbackState": "clarification",
+  "context": {
+    "agency_name": "Smart Talent AI",
+    "candidate": {
+      "name": null,
+      "experience": null,
+      "skills": [],
+      "salary_expectation": null
+    },
+    "matching_jobs": [],
+    "score": 0
+  },
+  "states": [
+    {
+      "id": "accueil",
+      "name": "Accueil",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Bonjour, je suis votre assistant de recrutement. Je suis ravi de faire votre connaissance. Pour quel type de poste postulez-vous aujourd'hui ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'apply'", "targetState": "preselection_experience" }
+      ]
+    },
+    {
+      "id": "preselection_experience",
+      "name": "Présélection Expérience",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "D'accord. Pouvez-vous me résumer votre expérience sur ce type de poste et vos principales compétences ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 20 } }
+      ],
+      "transitions": [
+        { "condition": "entities.experience && entities.skills", "targetState": "qualification_salaire" }
+      ]
+    },
+    {
+      "id": "qualification_salaire",
+      "name": "Qualification Salaire",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Très bien. Quelles sont vos prétentions salariales annuelles et votre disponibilité ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "entities.salary && entities.availability", "targetState": "matching_jobs" }
+      ]
+    },
+    {
+      "id": "matching_jobs",
+      "name": "Matching Jobs",
+      "onEnter": [
+        { "type": "query_database", "config": { "table": "job_offers", "action": "match_candidate" } },
+        { "type": "speak_to_caller", "config": { "text": "Je viens de trouver deux offres qui correspondent parfaitement à votre profil. L'une est chez un leader de la tech avec télétravail possible. Souhaitez-vous que je planifie un entretien avec le responsable ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'confirm'", "targetState": "prise_rdv_entretien" }
+      ]
+    },
+    {
+      "id": "prise_rdv_entretien",
+      "name": "Prise de RDV Entretien",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Super. J'ai un créneau libre pour un premier échange en visio demain à 11h. Cela vous conviendrait-il ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'confirm'", "targetState": "finalisation_entretien" }
+      ]
+    },
+    {
+      "id": "finalisation_entretien",
+      "name": "Finalisation Entretien",
+      "onEnter": [
+        { "type": "sync_to_calendar", "config": { "provider": "google" } },
+        { "type": "send_sms", "config": { "template": "confirmation_entretien" } },
+        { "type": "speak_to_caller", "config": { "text": "C'est validé ! Vous allez recevoir l'invitation par mail et un rappel par SMS. Un petit conseil : préparez des exemples concrets de vos succès passés. À bientôt !" } }
+      ],
+      "transitions": []
+    },
+    {
+      "id": "clarification",
+      "name": "Clarification",
+      "isFallback": true,
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Je n'ai pas bien compris. Souhaitez-vous postuler à une offre ou en savoir plus sur nos postes ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'apply'", "targetState": "preselection_experience" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "id": "customer-support-ai",
+  "name": "Assistant Support IA",
+  "industry": "customer_service",
+  "initialState": "accueil",
+  "fallbackState": "clarification",
+  "context": {
+    "support_name": "Smart Support AI",
+    "issue": {
+      "type": null,
+      "urgency": "low",
+      "description": null
+    },
+    "resolved": false
+  },
+  "states": [
+    {
+      "id": "accueil",
+      "name": "Accueil",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Bonjour, je suis votre assistant support. Comment puis-je vous aider aujourd'hui ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'report_issue'", "targetState": "qualification_probleme" },
+        { "condition": "intent === 'ask_question'", "targetState": "faq_intelligente" }
+      ]
+    },
+    {
+      "id": "qualification_probleme",
+      "name": "Qualification Problème",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "D'accord. Pouvez-vous m'en dire plus sur le problème rencontré et si cela bloque votre activité ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "entities.urgency === 'high'", "targetState": "triage_urgence" },
+        { "condition": "true", "targetState": "resolution_guidee" }
+      ]
+    },
+    {
+      "id": "triage_urgence",
+      "name": "Triage Urgence",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Je comprends que c'est urgent. Je vais immédiatement créer un ticket prioritaire et vous mettre en relation avec un expert technique." } },
+        { "type": "transfer_call", "config": { "target": "technical_expert" } }
+      ],
+      "transitions": []
+    },
+    {
+      "id": "faq_intelligente",
+      "name": "FAQ Intelligente",
+      "onEnter": [
+        { "type": "query_knowledge_base", "config": { "query": "{{entities.question}}" } },
+        { "type": "speak_to_caller", "config": { "text": "D'après notre base de connaissances, voici la solution : {{query_result}}. Cela répond-il à votre question ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'confirm'", "targetState": "finalisation_support" },
+        { "condition": "intent === 'refuse'", "targetState": "qualification_probleme" }
+      ]
+    },
+    {
+      "id": "resolution_guidee",
+      "name": "Résolution Guidée",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Très bien. Je vous propose d'essayer de redémarrer votre équipement. Est-ce que cela a résolu le souci ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'confirm'", "targetState": "finalisation_support" },
+        { "condition": "intent === 'refuse'", "targetState": "triage_urgence" }
+      ]
+    },
+    {
+      "id": "finalisation_support",
+      "name": "Finalisation Support",
+      "onEnter": [
+        { "type": "send_sms", "config": { "template": "support_resolved" } },
+        { "type": "speak_to_caller", "config": { "text": "Super ! Je suis ravi d'avoir pu vous aider. Un récapitulatif vous a été envoyé par SMS. À bientôt !" } }
+      ],
+      "transitions": []
+    },
+    {
+      "id": "clarification",
+      "name": "Clarification",
+      "isFallback": true,
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Je n'ai pas bien compris. Souhaitez-vous signaler un problème ou poser une question ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'report_issue'", "targetState": "qualification_probleme" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "title": "Settings",
+  "subtitle": "Manage your account and preferences",
+  "tabs": {
+    "apps": "Apps",
+    "profile": "Profile",
+    "security": "Security",
+    "notifications": "Notifications",
+    "appearance": "Appearance",
+    "team": "Team",
+    "business": "Business",
+    "cashier": "Cashier",
+    "monitoring": "Monitoring"
+  },
+  "profile": {
+    "title": "Profile",
+    "description": "Update your personal information",
+    "avatar": "Profile Picture",
+    "change_avatar": "Change Avatar",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "save_success": "Profile saved successfully"
+  },
+  "appearance": {
+    "title": "Appearance",
+    "description": "Customize the look and feel of your application",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "save_success": "Appearance settings saved"
+  },
+  "danger_zone": {
+    "title": "Danger Zone",
+    "description": "Irreversible actions",
+    "delete_account": "Delete Account",
+    "delete_account_warning": "This action cannot be undone. All your data will be permanently deleted."
+  }
+}

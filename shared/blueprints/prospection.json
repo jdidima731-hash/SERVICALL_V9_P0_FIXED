@@ -1,0 +1,99 @@
+{
+  "id": "prospection-standard",
+  "name": "Prospection Commerciale",
+  "industry": "prospection",
+  "initialState": "introduction",
+  "fallbackState": "clarification",
+  "context": {
+    "activity_type": "prospection_isolation",
+    "lead_score": 0,
+    "consent_rgpd": false,
+    "qualifications": {}
+  },
+  "states": [
+    {
+      "id": "introduction",
+      "name": "Introduction",
+      "onEnter": [
+        { "type": "load_callcenter_script", "config": { "activity": "prospection_isolation" } },
+        { "type": "speak_to_caller", "config": { "text": "{{pitch}}" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'interest' || intent === 'confirm'", "targetState": "rgpd_consent" },
+        { "condition": "intent === 'refuse'", "targetState": "gestion_objection" }
+      ]
+    },
+    {
+      "id": "rgpd_consent",
+      "name": "Consentement RGPD",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Avant de continuer, m'autorisez-vous à traiter vos données pour vérifier votre éligibilité ?" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "transitions": [
+        { "condition": "intent === 'confirm'", "targetState": "qualification" },
+        { "condition": "intent === 'refuse'", "targetState": "fin_appel" }
+      ]
+    },
+    {
+      "id": "qualification",
+      "name": "Qualification",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "C'est noté. {{questions_qualification[0].text}}" } },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "entities.proprio === true", "targetState": "qualification_chauffage" },
+        { "condition": "true", "targetState": "fin_appel" }
+      ]
+    },
+    {
+      "id": "qualification_chauffage",
+      "name": "Qualification Chauffage",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "{{questions_qualification[1].text}}" } },
+        { "type": "listen_and_understand", "config": { "timeout": 15 } }
+      ],
+      "transitions": [
+        { "condition": "entities.chauffage", "targetState": "finalisation_lead" }
+      ]
+    },
+    {
+      "id": "finalisation_lead",
+      "name": "Finalisation Lead",
+      "onEnter": [
+        { "type": "update_crm_lead", "config": { "status": "qualified", "score": 90 } },
+        { "type": "notify_slack_hot_lead", "config": { "channel": "sales-leads" } },
+        { "type": "send_sms_confirmation", "config": { "template": "rdv_technique" } },
+        { "type": "speak_to_caller", "config": { "text": "Félicitations, vous semblez éligible ! Un conseiller technique va vous rappeler. Merci et bonne journée." } }
+      ],
+      "transitions": []
+    },
+    {
+      "id": "gestion_objection",
+      "name": "Gestion Objection",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "{{reponse_objection}}" } },
+        { "type": "listen_and_understand", "config": { "timeout": 10 } }
+      ],
+      "objection_handlers": {
+        "NOT_INTERESTED": "soft_pivot",
+        "NO_TIME": "mini_pitch_10s",
+        "SEND_EMAIL": "capture_email"
+      },
+      "transitions": [
+        { "condition": "intent === 'interest' || intent === 'confirm'", "targetState": "rgpd_consent" },
+        { "condition": "true", "targetState": "fin_appel" }
+      ]
+    },
+    {
+      "id": "fin_appel",
+      "name": "Fin d'appel",
+      "onEnter": [
+        { "type": "speak_to_caller", "config": { "text": "Je comprends. Merci de votre temps. Au revoir." } }
+      ],
+      "transitions": []
+    }
+  ]
+}

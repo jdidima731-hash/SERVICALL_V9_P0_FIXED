@@ -1,0 +1,52 @@
+{
+  "billing": {
+    "title": "Billing",
+    "subtitle": "Manage your invoices and subscription",
+    "subscription": "Subscription",
+    "payment_method": "Payment Method",
+    "invoices": "Invoices",
+    "status_paid": "PAID",
+    "status_pending": "PENDING",
+    "status_failed": "FAILED",
+    "status_active": "ACTIVE",
+    "download": "Download",
+    "downloading": "Downloading invoice...",
+    "error_portal": "Error opening billing portal: ",
+    "error_payment": "Error generating payment link: ",
+    "no_invoices": "No invoices found"
+  },
+  "campaigns": {
+    "title": "Campaigns",
+    "subtitle": "Manage your marketing campaigns",
+    "create_campaign": "Create Campaign",
+    "campaign_name": "Campaign Name",
+    "status": "Status",
+    "actions": "Actions",
+    "start": "Start",
+    "stop": "Stop",
+    "edit": "Edit",
+    "delete": "Delete",
+    "import_csv": "Import CSV",
+    "no_campaigns": "No campaigns found"
+  },
+  "softphone": {
+    "title": "Phone",
+    "subtitle": "Make and receive calls",
+    "loading": "Loading softphone...",
+    "not_configured": "Softphone is not configured",
+    "configure": "Configure",
+    "twilio_config": "Twilio Configuration",
+    "ready": "Ready",
+    "configured": "Configured",
+    "missing": "Missing"
+  },
+  "calendar": {
+    "title": "Calendar",
+    "subtitle": "Manage your appointments",
+    "month": "Month",
+    "week": "Week",
+    "day": "Day",
+    "new_appointment": "New Appointment",
+    "no_appointments": "No appointments"
+  }
+}

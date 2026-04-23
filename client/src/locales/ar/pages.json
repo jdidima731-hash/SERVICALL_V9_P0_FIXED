@@ -1,0 +1,52 @@
+{
+  "billing": {
+    "title": "الفواتير",
+    "subtitle": "إدارة فواتيرك واشتراكك",
+    "subscription": "الاشتراك",
+    "payment_method": "طريقة الدفع",
+    "invoices": "الفواتير",
+    "status_paid": "مدفوعة",
+    "status_pending": "قيد الانتظار",
+    "status_failed": "فشلت",
+    "status_active": "نشطة",
+    "download": "تحميل",
+    "downloading": "جاري تحميل الفاتورة...",
+    "error_portal": "خطأ في فتح بوابة الفواتير: ",
+    "error_payment": "خطأ في إنشاء رابط الدفع: ",
+    "no_invoices": "لم يتم العثور على فواتير"
+  },
+  "campaigns": {
+    "title": "الحملات",
+    "subtitle": "إدارة حملاتك التسويقية",
+    "create_campaign": "إنشاء حملة",
+    "campaign_name": "اسم الحملة",
+    "status": "الحالة",
+    "actions": "الإجراءات",
+    "start": "ابدأ",
+    "stop": "توقف",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "import_csv": "استيراد CSV",
+    "no_campaigns": "لم يتم العثور على حملات"
+  },
+  "softphone": {
+    "title": "الهاتف",
+    "subtitle": "إجراء واستقبال المكالمات",
+    "loading": "جاري تحميل الهاتف الشبكي...",
+    "not_configured": "الهاتف الشبكي غير مكون",
+    "configure": "تكوين",
+    "twilio_config": "تكوين Twilio",
+    "ready": "جاهز",
+    "configured": "مكون",
+    "missing": "مفقود"
+  },
+  "calendar": {
+    "title": "التقويم",
+    "subtitle": "إدارة مواعيدك",
+    "month": "شهر",
+    "week": "أسبوع",
+    "day": "يوم",
+    "new_appointment": "موعد جديد",
+    "no_appointments": "لا توجد مواعيد"
+  }
+}
