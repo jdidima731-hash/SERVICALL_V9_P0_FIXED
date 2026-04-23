@@ -9,7 +9,7 @@ import * as crypto from "crypto";
 import * as dns from "dns/promises";
 import { TRPCError } from "@trpc/server";
 import { eq, desc } from "drizzle-orm";
-import { db, auditLogs, blacklistedNumbers } from "../db";
+import { db, securityAuditLogs, blacklistedNumbers } from "../db";
 import { logger } from "../infrastructure/logger";
 import { checkRedisRateLimit, resetRateLimit as resetRedisRateLimit } from "./redisRateLimitService";
 import { cache as cacheService } from "./cacheService";
@@ -74,9 +74,9 @@ export class SecurityService {
     try {
       const logs = await db
         .select()
-        .from(auditLogs)
-        .where(eq(auditLogs.tenantId, tenantId))
-        .orderBy(desc(auditLogs.createdAt))
+        .from(securityAuditLogs)
+        .where(eq(securityAuditLogs.tenantId, tenantId))
+        .orderBy(desc(securityAuditLogs.createdAt))
         .limit(limit);
 
       return logs;

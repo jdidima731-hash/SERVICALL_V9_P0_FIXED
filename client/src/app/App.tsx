@@ -84,7 +84,7 @@ const AdminPage = lazy(() => import("@/pages/admin"));
 const RecruitmentEnhanced     = lazy(() => import("@/pages/RecruitmentEnhanced"));
 const RecruitmentInterviews   = lazy(() => import("@/pages/RecruitmentInterviews"));
 const AgentSwitch             = lazy(() => import("@/pages/AgentSwitch"));
-const WorkflowsAndAgentSwitch = lazy(() => import("@/pages/WorkflowsAndAgentSwitch"));
+// WorkflowsAndAgentSwitch removed - using Workflows directly
 
 // ── Guards ───────────────────────────────────────────────────────────
 
@@ -158,10 +158,9 @@ export default function App() {
                   <Route path="/messages"               component={Messages} />
 
                   {/* Workflows */}
-                  {/* ✅ FIX P1-C — Route canonique workflow */}
-                  <Route path="/workflows"          component={WorkflowsAndAgentSwitch} />
+                  <Route path="/workflows"          component={Workflows} />
                   <Route path="/workflows/:id"      component={WorkflowEditor} />
-                  {/* Legacy redirects */}
+                  <Route path="/workflows-agent-switch"> <Redirect to="/workflows" /> </Route>
                   <Route path="/workflows-admin">   <Redirect to="/workflows" /> </Route>
 
                   {/* IA & Analytics */}
@@ -169,8 +168,8 @@ export default function App() {
                   <Route path="/intelligence"           component={IntelligenceCentrale} />
                   <Route path="/agent-dashboard"        component={AgentDashboard} />
                   <Route path="/manager-dashboard"      component={ManagerDashboard} />
-                  <Route path="/admin-dashboard">    <Redirect to="/admin" /> </Route>
                   <Route path="/admin"                   component={AdminPage} />
+                  <Route path="/admin-dashboard">    <Redirect to="/admin" /> </Route>
                   <Route path="/coaching"               component={Coaching} />
                   <Route path="/ai-roles"               component={AIRoleEditor} />
 

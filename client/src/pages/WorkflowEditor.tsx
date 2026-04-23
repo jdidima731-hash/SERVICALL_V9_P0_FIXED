@@ -33,14 +33,14 @@ type WorkflowTrigger =
   | "prospect_created"
   | "appointment_scheduled";
 
-type WorkflowActionType =
-  | "send_sms"
-  | "send_email"
-  | "create_task"
-  | "assign_agent"
-  | "create_lead"
-  | "update_lead"
-  | "ai_summary";
+export const WORKFLOW_ACTIONS = [
+  "send_sms",
+  "create_outbound_call",
+  "assign_agent",
+  "update_status"
+] as const;
+
+export type WorkflowActionType = typeof WORKFLOW_ACTIONS[number];
 
 interface WorkflowAction {
   id: string;
@@ -105,12 +105,9 @@ export function WorkflowEditor() {
 
   const actions: { value: WorkflowActionType; label: string; icon: React.ReactNode }[] = [
     { value: "send_sms", label: "Envoyer SMS", icon: <MessageSquare size={20} /> },
-    { value: "send_email", label: "Envoyer Email", icon: <MessageSquare size={20} /> },
-    { value: "create_task", label: "Créer Tâche", icon: <CheckSquare size={20} /> },
+    { value: "create_outbound_call", label: "Appel Sortant", icon: <Phone size={20} /> },
     { value: "assign_agent", label: "Assigner Agent", icon: <Users size={20} /> },
-    { value: "create_lead", label: "Créer Lead", icon: <Plus size={20} /> },
-    { value: "update_lead", label: "Mettre à jour Lead", icon: <Settings size={20} /> },
-    { value: "ai_summary", label: "Résumé IA", icon: <Zap size={20} /> },
+    { value: "update_status", label: "Mettre à jour Statut", icon: <Settings size={20} /> },
   ];
 
   const handleCreateWorkflow = () => {

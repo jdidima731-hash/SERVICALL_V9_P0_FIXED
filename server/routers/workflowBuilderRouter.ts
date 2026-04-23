@@ -11,7 +11,7 @@ import { JsonValueSchema } from "@shared/workflow/contracts";
 import { assertNotFrozen } from "@server/_core/freeze";
 import { normalizeDbRecord } from "@server/_core/responseNormalizer";
 import { createLogger } from "@server/lib/logger";
-import { withTenantContext } from "@server/middleware/rlsMiddleware";
+// withTenantContext removed - using tenantProcedure context directly
 import { router, tenantProcedure, managerProcedure } from "@server/procedures";
 import { WorkflowService } from "@server/services/workflowService";
 import { actionRegistry } from "@server/workflow-engine/actionRegistry";
@@ -54,12 +54,7 @@ export const workflowBuilderRouter = router({
     .mutation(async ({ ctx, input }) => {
       assertNotFrozen("workflowBuilder.save");
 
-      if (!ctx.tenantId || !ctx.userId) {
-        throw new TRPCError({ code: "UNAUTHORIZED" });
-      }
-
-      return withTenantContext(ctx.userId, ctx.tenantId, async () => {
-        try {
+      try {
           input.actions.forEach((action) => {
             actionRegistry.getHandler(action.type);
           });
@@ -123,7 +118,6 @@ export const workflowBuilderRouter = router({
 
           throw mapAppErrorToTrpc(appError);
         }
-      });
     }),
 
   list: tenantProcedure
@@ -132,46 +126,28 @@ export const workflowBuilderRouter = router({
       offset: z.number().int().min(0).default(0),
     }))
     .query(async ({ ctx, input }) => {
-      if (!ctx.tenantId || !ctx.userId) {
-        throw new TRPCError({ code: "UNAUTHORIZED" });
-      }
-
-      return withTenantContext(ctx.userId, ctx.tenantId, async () => {
-        const { data, total } = await WorkflowService.list(ctx.tenantId, input.limit, input.offset);
-        return { data: data.map(normalizeDbRecord), total };
-      });
+      const { data, total } = await WorkflowService.list(ctx.tenantId!, input.limit, input.offset);
+      return { data: data.map(normalizeDbRecord), total };
     }),
 
   activate: managerProcedure
     .input(z.object({ workflowId: z.number().int().positive() }))
     .mutation(async ({ ctx, input }) => {
-      if (!ctx.tenantId || !ctx.userId) {
-        throw new TRPCError({ code: "UNAUTHORIZED" });
+      const updated = await WorkflowService.update(input.workflowId, ctx.tenantId!, { isActive: true });
+      if (!updated) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow non trouvé" });
       }
-
-      return withTenantContext(ctx.userId, ctx.tenantId, async () => {
-        const updated = await WorkflowService.update(input.workflowId, ctx.tenantId, { isActive: true });
-        if (!updated) {
-          throw new TRPCError({ code: "NOT_FOUND", message: "Workflow non trouvé" });
-        }
-        return normalizeDbRecord(updated);
-      });
+      return normalizeDbRecord(updated);
     }),
 
   deactivate: managerProcedure
     .input(z.object({ workflowId: z.number().int().positive() }))
     .mutation(async ({ ctx, input }) => {
-      if (!ctx.tenantId || !ctx.userId) {
-        throw new TRPCError({ code: "UNAUTHORIZED" });
+      const updated = await WorkflowService.update(input.workflowId, ctx.tenantId!, { isActive: false });
+      if (!updated) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow non trouvé" });
       }
-
-      return withTenantContext(ctx.userId, ctx.tenantId, async () => {
-        const updated = await WorkflowService.update(input.workflowId, ctx.tenantId, { isActive: false });
-        if (!updated) {
-          throw new TRPCError({ code: "NOT_FOUND", message: "Workflow non trouvé" });
-        }
-        return normalizeDbRecord(updated);
-      });
+      return normalizeDbRecord(updated);
     }),
 
   duplicate: managerProcedure
@@ -182,28 +158,22 @@ export const workflowBuilderRouter = router({
     .mutation(async ({ ctx, input }) => {
       assertNotFrozen("workflowBuilder.duplicate");
 
-      if (!ctx.tenantId || !ctx.userId) {
-        throw new TRPCError({ code: "UNAUTHORIZED" });
+      const source = await WorkflowService.getById(input.workflowId, ctx.tenantId!);
+      if (!source) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow source non trouvé" });
       }
 
-      return withTenantContext(ctx.userId, ctx.tenantId, async () => {
-        const source = await WorkflowService.getById(input.workflowId, ctx.tenantId);
-        if (!source) {
-          throw new TRPCError({ code: "NOT_FOUND", message: "Workflow source non trouvé" });
-        }
-
-        const copy = await WorkflowService.create({
-          tenantId: ctx.tenantId,
-          name: input.newName ?? `${source.name} (copie)`,
-          description: source.description ?? undefined,
-          triggerType: source.triggerType ?? "manual",
-          triggerConfig: source.triggerConfig ?? null,
-          actions: source.actions ?? [],
-          isActive: false,
-        });
-
-        return normalizeDbRecord(copy);
+      const copy = await WorkflowService.create({
+        tenantId: ctx.tenantId!,
+        name: input.newName ?? `${source.name} (copie)`,
+        description: source.description ?? undefined,
+        triggerType: source.triggerType ?? "manual",
+        triggerConfig: source.triggerConfig ?? null,
+        actions: source.actions ?? [],
+        isActive: false,
       });
+
+      return normalizeDbRecord(copy);
     }),
 
   delete: managerProcedure
@@ -211,17 +181,11 @@ export const workflowBuilderRouter = router({
     .mutation(async ({ ctx, input }) => {
       assertNotFrozen("workflowBuilder.delete");
 
-      if (!ctx.tenantId || !ctx.userId) {
-        throw new TRPCError({ code: "UNAUTHORIZED" });
+      const result = await WorkflowService.delete(input.workflowId, ctx.tenantId!);
+      if (!result) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Workflow non trouvé" });
       }
-
-      return withTenantContext(ctx.userId, ctx.tenantId, async () => {
-        const result = await WorkflowService.delete(input.workflowId, ctx.tenantId);
-        if (!result) {
-          throw new TRPCError({ code: "NOT_FOUND", message: "Workflow non trouvé" });
-        }
-        return { success: true, workflowId: input.workflowId };
-      });
+      return { success: true, workflowId: input.workflowId };
     }),
 
   listActionTypes: tenantProcedure.query(async () => ({
@@ -241,13 +205,7 @@ export const workflowBuilderRouter = router({
       limit: z.number().int().min(1).max(200).default(50),
     }))
     .query(async ({ ctx, input }) => {
-      if (!ctx.tenantId || !ctx.userId) {
-        throw new TRPCError({ code: "UNAUTHORIZED" });
-      }
-
-      return withTenantContext(ctx.userId, ctx.tenantId, async () => {
-        const executions = await WorkflowService.getExecutionHistory(input.workflowId, input.limit);
-        return { data: executions };
-      });
+      const executions = await WorkflowService.getExecutionHistory(input.workflowId, input.limit);
+      return { data: executions };
     }),
 });

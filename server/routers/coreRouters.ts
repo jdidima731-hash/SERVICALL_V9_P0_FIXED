@@ -5,6 +5,7 @@ import { userRouter } from "./userRouter";
 import { tenantRouter } from "./tenantRouter";
 import { securityRouter } from "./securityRouter";
 import { teamManagerRouter } from "./teamManagerRouter";
+import { taskRouter } from "./taskRouter";
 
 export const coreRouter = router({
   system: systemRouter,
@@ -13,4 +14,5 @@ export const coreRouter = router({
   tenant: tenantRouter,
   security: securityRouter,
   teamManager: teamManagerRouter,
+  tasks: taskRouter,
 });

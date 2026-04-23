@@ -1,6 +1,6 @@
 import { router, publicProcedure, tenantProcedure } from "../procedures";
 import { z } from "zod";
-import { db, stripeEvents, auditLogs } from "../db";
+import { db, stripeEvents, securityAuditLogs } from "../db";
 import { eq, desc, and } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
 
@@ -31,13 +31,13 @@ export const webhookRouter = router({
     }))
     .query(async ({ ctx, input }) => {
       return await db.select()
-        .from(auditLogs)
+        .from(securityAuditLogs)
         .where(and(
-          eq(auditLogs.tenantId, ctx.tenantId!),
-          eq(auditLogs.action, "webhook_received")
+          eq(securityAuditLogs.tenantId, ctx.tenantId!),
+          eq(securityAuditLogs.action, "webhook_received")
         ))
         .limit(input.limit)
-        .orderBy(desc(auditLogs.createdAt));
+        .orderBy(desc(securityAuditLogs.createdAt));
     }),
 
   /**

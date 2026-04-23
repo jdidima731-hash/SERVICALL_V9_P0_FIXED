@@ -137,7 +137,7 @@ export const securityRouter = router({
       assertDateRange(startDate, endDate);
 
       try {
-        const dashboard = await SecurityService.getComplianceDashboard(ctx.tenantId);
+        const dashboard = await SecurityService.getComplianceDashboard(ctx.tenantId!);
         return { dashboard: mapComplianceDashboard(dashboard) };
       } catch (error: unknown) {
         logger.error("[SecurityRouter] Failed to get compliance dashboard", {
@@ -163,7 +163,7 @@ export const securityRouter = router({
    */
   checkKeyHealth: tenantProcedure.output(keyHealthSchema).query(async ({ ctx }) => {
     try {
-      const health = await SecurityService.checkKeyHealth(ctx.tenantId);
+      const health = await SecurityService.checkKeyHealth(ctx.tenantId!);
       return keyHealthSchema.parse(health);
     } catch (error: unknown) {
       logger.error("[SecurityRouter] Failed to check key health", {
@@ -191,7 +191,7 @@ export const securityRouter = router({
     .mutation(async ({ input, ctx }) => {
       try {
         return successResponseSchema.parse(
-          await SecurityService.resolveViolation(ctx.tenantId, input.violationId, input.resolution),
+          await SecurityService.resolveViolation(ctx.tenantId!, input.violationId, input.resolution),
         );
       } catch (error: unknown) {
         logger.error("[SecurityRouter] Failed to resolve violation", {
@@ -218,7 +218,7 @@ export const securityRouter = router({
     .output(successResponseSchema)
     .mutation(async ({ ctx }) => {
       try {
-        await complianceService.checkStorageCompliance(ctx.tenantId);
+        await complianceService.checkStorageCompliance(ctx.tenantId!);
         return { success: true };
       } catch (error: unknown) {
         logger.error("[SecurityRouter] Failed to run periodic compliance check", {
@@ -250,7 +250,7 @@ export const securityRouter = router({
 
       try {
         const report = await complianceService.generateAuditReport(
-          ctx.tenantId,
+          ctx.tenantId!,
           startDate,
           endDate,
           input.format,
@@ -283,7 +283,7 @@ export const securityRouter = router({
    */
   rotateKey: tenantProcedure.output(successResponseSchema).mutation(async ({ ctx }) => {
     try {
-      return successResponseSchema.parse(await SecurityService.rotateKey(ctx.tenantId));
+      return successResponseSchema.parse(await SecurityService.rotateKey(ctx.tenantId!));
     } catch (error: unknown) {
       logger.error("[SecurityRouter] Failed to rotate key", {
         error: error instanceof Error ? error.message : String(error),
@@ -313,7 +313,7 @@ export const securityRouter = router({
     .output(auditLogsResponseSchema)
     .query(async ({ ctx, input }) => {
       try {
-        const logs = await SecurityService.getAuditLogs(ctx.tenantId, input.limit);
+        const logs = await SecurityService.getAuditLogs(ctx.tenantId!, input.limit);
         return auditLogsResponseSchema.parse({
           logs: logs.map((log) => auditLogSchema.parse(log)),
           total: logs.length,

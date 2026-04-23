@@ -5,7 +5,7 @@
 
 import { logger } from "../logger";
 import { db } from "../../db";
-import { auditLogs } from "../../../drizzle/schema";
+import { securityAuditLogs } from "../../../drizzle/schema";
 
 export enum AuditAction {
   USER_LOGIN = "USER_LOGIN",
@@ -46,12 +46,12 @@ export class AuditService {
         action,
         userId,
         tenantId,
-        timestamp: new Date(),
-        details: JSON.stringify(details),
+        createdAt: new Date(),
+        metadata: details,
       };
 
-      // Enregistrer dans la base de données (si le schéma auditLogs existe)
-      await db.insert(auditLogs).values(logEntry);
+      // Enregistrer dans la base de données
+      await db.insert(securityAuditLogs).values(logEntry);
 
       // Toujours logger pour l'observabilité immédiate
       logger.info("[AuditService] Action logged", logEntry);
@@ -74,11 +74,11 @@ export class AuditService {
         action: AuditAction.USER_LOGIN,
         userId: null,
         tenantId: null,
-        timestamp: new Date(),
-        details: JSON.stringify({ email, ip, success: false, reason }),
+        createdAt: new Date(),
+        metadata: { email, ip, success: false, reason },
       };
 
-      await db.insert(auditLogs).values(logEntry);
+      await db.insert(securityAuditLogs).values(logEntry);
       logger.warn("[AuditService] Failed login attempt", logEntry);
     } catch (error: any) {
       logger.error("[AuditService] Failed to log failed login", {

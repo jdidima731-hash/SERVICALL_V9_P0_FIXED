@@ -12,10 +12,8 @@ const MODE_TEST = process.env['MODE_TEST'] === "true";
  */
 export async function testLoginHandler(req: Request, res: Response): Promise<void> {
   // H-4: Hard block in production regardless of MODE_TEST env var
-  if (process.env.NODE_ENV === 'production') {
-    logger.warn("[TestLogin] Attempt to access test endpoint in production — blocked");
-    res.status(403).json({ error: "Forbidden" });
-    return;
+  if (process.env.NODE_ENV === "production") {
+    throw new Error("Disabled in production");
   }
 
   logger.info("[TestLogin] Request received");

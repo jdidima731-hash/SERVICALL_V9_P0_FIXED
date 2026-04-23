@@ -19,7 +19,7 @@ type DrizzleDB = PostgresJsDatabase<typeof schema> & { query: Record<string, unk
 
 // Re-export du schéma
 export * from "../drizzle/schema";
-export { securityAuditLogs as auditLogs } from "../drizzle/schema-compliance";
+export { securityAuditLogs } from "../drizzle/schema-compliance";
 export type AuditLog = schema.SecurityAuditLog;
 export type AtRiskAgent = { agentId: number; failedCalls: number; totalCalls: number };
 export type AgentPerformanceMetric = { 
